@@ -5,7 +5,8 @@ RUN apt-get update \
     && docker-php-ext-install mysqli mbstring \
     && apt-get purge -y --auto-remove libonig-dev \
     && rm -rf /var/lib/apt/lists/*
-RUN a2enmod rewrite
+RUN a2dismod mpm_event mpm_worker mpm_auto \
+    && a2enmod mpm_prefork rewrite
 
 WORKDIR /var/www/html
 COPY . /var/www/html/
