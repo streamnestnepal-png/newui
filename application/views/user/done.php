@@ -22,7 +22,7 @@
 
 
 
-    <title>GameINA - Web Game Portal Indonesia</title>
+    <title>StreamNest - Web Game Portal Indonesia</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light nav-colour" id="nav">
         <div class="container">
-            <a class="navbar-brand text-white" href="<?=base_url('welcome')?>">Gameindonesia.</a>
+            <a class="navbar-brand" href="<?=base_url('welcome')?>"><img class="navbar-brand-logo" src="<?=base_url('media/StreamNest.png')?>" alt="StreamNest"></a>
             <script src="<?=base_url('assets/');?>js/myscript.js"></script>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,11 +81,7 @@
                             <a class="dropdown-item" style="color:#d6011d !important;" href="
                             <?=base_url('topup/free_fire')?>">Free Fire</a>
                             <a class="dropdown-item" style="color:#d6011d !important;" href="
-                            <?=base_url('topup/aov')?>">Arena of valor</a>
-                            <a class="dropdown-item" style="color:#d6011d !important;" href="
                             <?=base_url('topup/pubg')?>">PUBG</a>
-                            <a class="dropdown-item" style="color:#d6011d !important;" href="
-                            <?=base_url('topup/marvel')?>">Marvel Super Wars</a>
                         </div>
                     </li>
 
@@ -165,11 +161,9 @@
                     <div class="col-md-6 mt-md-0 mt-3">
 
                         <!-- Content -->
-                        <h3 class="text-uppercase footer-text">Tentang GameINA.</h3>
-                        <p>GameINA Adalah portal game pertama di indonesia, yang menyediakan fasilitas untuk
-                            para
-                            developer
-                            indonesia. agar lebih berkarya dan diapresiasi.</p>
+                        <h3 class="text-uppercase footer-text">About StreamNest</h3>
+                        <p>Your trusted destination for premium subscriptions and digital services. Get access to your
+                            favorite platforms quickly, securely, and hassle-free.</p>
 
                     </div>
                     <!-- Grid column -->
@@ -184,13 +178,13 @@
 
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#!" class="text-white">Sejarah</a>
+                                <a href="#!" class="text-white">History</a>
                             </li>
                             <li>
-                                <a href="#!" class="text-white">Syarat & Ketentuan</a>
+                                <a href="#!" class="text-white">Terms &amp; Conditions</a>
                             </li>
                             <li>
-                                <a href="#!" class="text-white">Tentang</a>
+                                <a href="#!" class="text-white">About</a>
                             </li>
 
                         </ul>
@@ -232,8 +226,8 @@
             <!-- Footer Links -->
 
             <!-- Copyright -->
-            <div class="footer-copyright text-center small py-3">© 2020 Copyright :
-                <a href="syauqizaidan.github.io" class="text-white"> Descienfy / Syaauqi</a>
+            <div class="footer-copyright text-center small py-3">© 2020 Copyright : Descienfy / Syaauqi to © 2026
+                <a href="/" class="text-white"> Stream Nest Nepal</a>. All rights reserved.
             </div>
         </div>
         <!-- Copyright -->

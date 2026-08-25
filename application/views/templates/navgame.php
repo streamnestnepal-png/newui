@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.7.1/dist/sweetalert2.all.min.js"></script>
 
 
-    <title>GameINA - Web Game Portal Indonesia</title>
+    <title>StreamNest - Web Game Portal Indonesia</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light nav-colour" id="nav">
         <div class="container">
-            <a class="navbar-brand text-white" href="<?=base_url('welcome')?>">Gameindonesia.</a>
+            <a class="navbar-brand" href="<?=base_url('welcome')?>"><img class="navbar-brand-logo" src="<?=base_url('media/StreamNest.png')?>" alt="StreamNest"></a>
             <script src="<?=base_url('assets/');?>js/myscript.js"></script>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,44 +39,39 @@
                         <a class="nav-link" href="<?=base_url('welcome')?>">Beranda <span
                                 class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Toko</a>
-                    </li>
-                    <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="<?=base_url('games')?>" id="navbarDropdown"
-                            role="button" aria-haspopup="true" aria-expanded="false">
-                            Game
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="gamesDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Subscriptions
                         </a>
-                        <div class="dropdown-menu bg-white" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="<?=base_url('games/fps')?>">First Person Shooter</a>
-                            <a class="dropdown-item" href="<?=base_url('games/balapan')?>">Racing</a>
-                            <a class="dropdown-item" href="<?=base_url('games/misteri')?>">Mistery</a>
-                            <a class="dropdown-item" href="<?=base_url('games/edukasi')?>">Education</a>
-                            <a class="dropdown-item" href="<?=base_url('games/olahraga')?>">Sports</a>
-                            <a class="dropdown-item" href="<?=base_url('games/petualangan')?>">Adventure</a>
-                            <a class="dropdown-item" href="<?=base_url('games/arcade')?>">Arcade</a>
-                            <a class="dropdown-item" href="<?=base_url('games/aksi')?>">Action</a>
-                            <a class="dropdown-item" href="<?=base_url('games/multiplayer')?>">Multiplayer</a>
-                    </li>
-                    <li class=" nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">
-                            Topup
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" style="color: #d6011d!important"
-                                href="<?=base_url('topup/mobile_legends')?>">Mobile Legends</a>
-                            <a class="dropdown-item" style="color: #d6011d!important"
-                                href="<?=base_url('topup/free_fire')?>">Free Fire</a>
-                            <a class="dropdown-item" style="color: #d6011d!important"
-                                href="<?=base_url('topup/aov')?>">Arena of valor</a>
-                            <a class="dropdown-item" style="color: #d6011d!important"
-                                href="<?=base_url('topup/pubg')?>">PUBG</a>
-                            <a class="dropdown-item" style="color: #d6011d!important" href="
-                            <?=base_url('topup/marvel')?>">Marvel Super Wars</a>
+                        <div class="dropdown-menu" aria-labelledby="gamesDropdown">
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/all')?>">All Subscriptions</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/netflix')?>">Netflix</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/spotify')?>">Spotify</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/youtube')?>">YouTube</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/chatgpt')?>">ChatGPT</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/canva')?>">Canva</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/adobe')?>">Adobe</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/vpn')?>">VPN</a>
+                            <a class="dropdown-item" href="#">Education</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/discord')?>">Discord</a>
+                            <a class="dropdown-item" href="<?=base_url('subscriptions/telegram')?>">Telegram</a>
+                            <a class="dropdown-item" href="#">Other Subscriptions</a>
                         </div>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="topupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Topup</a>
+                        <div class="dropdown-menu" aria-labelledby="topupDropdown">
+                            <a class="dropdown-item" href="<?=base_url('topup/mobile_legends')?>">Mobile Legends</a>
+                            <a class="dropdown-item" href="<?=base_url('topup/free_fire')?>">Free Fire</a>
+                            <a class="dropdown-item" href="<?=base_url('topup/pubg')?>">PUBG</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-link" href="<?=base_url('cart')?>" aria-label="Shopping cart">
+                            <i class="fas fa-shopping-cart"></i><span class="cart-count">0</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="cta text-decoration-none" href="<?=base_url('welcome')?>">
                             <span class="my-auto"><i class="font-lol">LOGIN</i></span>
@@ -104,3 +99,8 @@
 
     </nav>
     <!-- end navbar -->
+    <script>
+        document.querySelectorAll('.cart-count').forEach(function (badge) {
+            badge.textContent = JSON.parse(localStorage.getItem('gameinaCart') || '[]').length;
+        });
+    </script>

@@ -95,6 +95,77 @@ CREATE TABLE `pembayaran` (
   `nama_user` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(32) NOT NULL,
+  `checkout_id` varchar(32) NOT NULL,
+  `payment_id` varchar(128) DEFAULT NULL,
+  `telegram_chat_id` varchar(64) NOT NULL DEFAULT '',
+  `telegram_message_id` varchar(64) NOT NULL DEFAULT '',
+  `email` varchar(128) NOT NULL,
+  `customer_name` varchar(128) NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `user_id` varchar(128) NOT NULL,
+  `server_id` varchar(128) NOT NULL,
+  `product` varchar(128) NOT NULL,
+  `package` varchar(128) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `status` varchar(32) NOT NULL DEFAULT 'pending',
+  `confirmation_sent_at` int(11) NOT NULL DEFAULT 0,
+  `credentials_sent_at` int(11) NOT NULL DEFAULT 0,
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_id` (`order_id`),
+  UNIQUE KEY `checkout_id` (`checkout_id`),
+  UNIQUE KEY `payment_id` (`payment_id`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `telegram_delivery_drafts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(32) NOT NULL,
+  `chat_id` varchar(64) NOT NULL,
+  `message_id` varchar(64) NOT NULL DEFAULT '',
+  `draft_message` text NOT NULL,
+  `status` varchar(32) NOT NULL DEFAULT 'waiting_input',
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `telegram_draft_order` (`order_id`),
+  KEY `telegram_draft_chat_status` (`chat_id`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `checkout_sessions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `checkout_id` varchar(32) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `customer_name` varchar(128) NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `user_id` varchar(128) NOT NULL,
+  `server_id` varchar(128) NOT NULL,
+  `product` varchar(128) NOT NULL,
+  `package` varchar(128) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `status` varchar(32) NOT NULL DEFAULT 'pending',
+  `payment_id` varchar(128) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `checkout_id` (`checkout_id`),
+  UNIQUE KEY `payment_id` (`payment_id`),
+  KEY `checkout_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `abandoned_carts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(128) NOT NULL,
+  `items_json` text NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `last_reminded_at` int(11) NOT NULL DEFAULT 0,
+  `reminders_today` tinyint(1) NOT NULL DEFAULT 0,
+  `reminder_day` date NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Dumping data for table `pembayaran`
 --

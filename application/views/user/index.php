@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>GameINA | Store</title>
+    <title>StreamNest | Store</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no ">
 
@@ -263,18 +263,8 @@
                                                             </li>
                                                             <li class="kt-menu__item " aria-haspopup="true"><a href="#"
                                                                     class="kt-menu__link "><i
-                                                                        class="kt-menu__link-icon flaticon-clipboard"></i><span
-                                                                        class="kt-menu__link-text">Arena of valor
-                                                                    </span></a></li>
-                                                            <li class="kt-menu__item " aria-haspopup="true"><a href="#"
-                                                                    class="kt-menu__link "><i
                                                                         class="kt-menu__link-icon flaticon-graphic-1"></i><span
                                                                         class="kt-menu__link-text">PUBG
-                                                                    </span></a></li>
-                                                            <li class="kt-menu__item " aria-haspopup="true"><a href="#"
-                                                                    class="kt-menu__link "><i
-                                                                        class="kt-menu__link-icon flaticon-graphic-2"></i><span
-                                                                        class="kt-menu__link-text">Marvel : Super war
                                                                     </span></a></li>
                                                         </ul>
                                                     </li>
@@ -333,7 +323,7 @@
                     <!-- begin:: Brand -->
                     <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
                         <a class="kt-header__brand-logo" href="<?=base_url('user')?>">
-                            <p class="logo-tengah mt-3">Gameindonesia.</p>
+                            <p class="logo-tengah mt-3">StreamNest</p>
                         </a>
                     </div>
 
@@ -1018,8 +1008,7 @@ echo $data['user']['nama'];
         <div class="kt-container">
             <div class="kt-footer__bottom">
                 <div class="kt-footer__copyright">
-                    2020&nbsp;&copy;&nbsp;<a href="syauqizaidan.github.io target=" _blank" class="kt-link">Descienfy /
-                        Syaauqi</a>
+                    2020&nbsp;&copy;&nbsp;Descienfy / Syaauqi to 2026&nbsp;&copy;&nbsp;<strong>Stream Nest Nepal</strong>. All rights reserved.
                 </div>
                 <div class="kt-footer__menu">
                     <a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Tentang</a>

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>GameINA | Publisher login</title>
+    <title>StreamNest | Publisher login</title>
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--begin::Fonts -->
@@ -128,7 +128,7 @@
                                     <a href="<?=base_url('welcome')?>">
                                         <h1 class="mx-auto font-weight-bold display-4"
                                             style="color: #D6011D !important">
-                                            Gameindonesia.
+                                            StreamNest
                                             </h2>
                                     </a>
                                 </div>

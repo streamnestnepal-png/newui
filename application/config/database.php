@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'gameina',
+	'hostname' => getenv('MYSQLHOST') ?: getenv('DB_HOST') ?: 'localhost',
+	'username' => getenv('MYSQLUSER') ?: getenv('DB_USERNAME') ?: 'root',
+	'password' => getenv('MYSQLPASSWORD') ?: getenv('DB_PASSWORD') ?: '',
+	'database' => getenv('MYSQLDATABASE') ?: getenv('DB_DATABASE') ?: 'gameina',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -88,7 +88,7 @@ $db['default'] = array(
 	'char_set' => 'utf8',
 	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
+	'encrypt' => getenv('DB_SSL') === 'true',
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),

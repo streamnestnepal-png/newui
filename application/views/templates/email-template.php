@@ -1,9 +1,10 @@
+<?php $link = isset($link) ? $link : ''; ?>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
     xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-    <title> Verifikasi Akun - GameINA </title>
+    <title>Verify your StreamNest Nepal Account</title>
     <!--[if !mso]><!-- -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<![endif]-->
@@ -26,8 +27,6 @@
     table,
     td {
         border-collapse: collapse;
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
     }
 
     img {
@@ -83,13 +82,13 @@
     </style>
 </head>
 
-<body style="background-color:#8D0916; font-family: 'Poppins', sans-serif !important;">
+<body style="background-color:#f3f5f8; font-family: 'Poppins', sans-serif !important;">
     <div
         style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
     </div>
     <div style="background-color:#E7E7E7;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-            style="background:#040B4F;background-color:#8D0916;width:100%;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                style="background:#ffffff;background-color:#ffffff;width:100%;">
             <tbody>
                 <tr>
                     <td>
@@ -98,7 +97,7 @@
          align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
       >
         <tr>
-          <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+          <td style="line-height:0px;font-size:0px;">
       <![endif]-->
                         <div style="margin:0px auto;max-width:600px;">
                             <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
@@ -106,7 +105,7 @@
                                 <tbody>
                                     <tr>
                                         <td
-                                            style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0;text-align:center;">
+                                            style="direction:ltr;font-size:0px;padding:26px 0 22px;text-align:center;border-bottom:4px solid #b50924;">
                                             <!--[if mso | IE]>
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
 
@@ -129,13 +128,13 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style="width:600px;"> <a
-                                                                                href="https://google.com"
+                                                                                href="<?=base_url();?>"
                                                                                 target="_blank">
 
-                                                                                <img alt="" height="auto"
-                                                                                    src="https://res.cloudinary.com/dc0rn8rch/image/upload/v1583582128/header-top_wnn0ij.png"
-                                                                                    style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                                                                    width="600">
+                                                                                <img alt="StreamNest Nepal" height="auto"
+                                                                                    src="<?=base_url('media/StreamNest.png');?>"
+                                                                                    style="border:0;display:block;outline:none;text-decoration:none;height:auto;max-height:90px;width:auto;max-width:78%;margin:0 auto;font-size:13px;"
+                                                                                    width="320">
 
                                                                             </a> </td>
                                                                     </tr>
@@ -171,9 +170,9 @@
          align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
       >
         <tr>
-          <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+          <td style="line-height:0px;font-size:0px;">
       <![endif]-->
-        <div style="background:#1f2e78;background-color:#8D0916;margin:0px auto;max-width:600px;">
+        <div style="display:none;background:#1f2e78;background-color:#8D0916;margin:0px auto;max-width:600px;">
             <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
                 style="background:#8D0916;background-color:#8D0916;width:100%;">
                 <tbody>
@@ -201,8 +200,8 @@
                                                         <td style="width:600px;"> <a href="https://google.com"
                                                                 target="_blank">
 
-                                                                <img alt="" height="auto"
-                                                                    src="https://res.cloudinary.com/dc0rn8rch/image/upload/v1583582126/header-bottom_rypkuo.png"
+                                                                <img alt="StreamNest Nepal" height="auto"
+                                                                    src="<?=base_url('media/StreamNest.png');?>"
                                                                     style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                                                     width="600">
 
@@ -235,7 +234,7 @@
          align="center" border="0" cellpadding="0" cellspacing="0" class="body-section-outlook" style="width:600px;" width="600"
       >
         <tr>
-          <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+          <td style="line-height:0px;font-size:0px;">
       <![endif]-->
         <div class="body-section"
             style="-webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15); box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15); margin: 0px auto; max-width: 600px;">
@@ -256,7 +255,7 @@
          align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
       >
         <tr>
-          <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+          <td style="line-height:0px;font-size:0px;">
       <![endif]-->
                             <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
@@ -283,7 +282,7 @@
                                                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                                 <div
                                                                     style="font-family: 'Poppins', sans-serif !important;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">
-                                                                    Verifikasi akun GameINA</div>
+                                                                    Verify your StreamNest Nepal Account</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -291,7 +290,7 @@
                                                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                                 <div
                                                                     style="font-family: 'Poppins', sans-serif !important;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
-                                                                    Hello Gamers!,</div>
+                                                                    Hello!</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -299,10 +298,10 @@
                                                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                                 <div
                                                                     style="font-family: 'Poppins', sans-serif !important;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
-                                                                    Sebelum resmi menjadi anggota komunitas GameINA,
-                                                                    Kamu harus terlebih dahulu memverifikasi akun kamu.
-                                                                    dengan begitu kamu mengetahui kalau kamu bukan
-                                                                    robot.</div>
+                                                                    Before you become an official member of
+                                                                    <strong>StreamNest Nepal</strong>, please verify your
+                                                                    account. This helps us confirm your email address and
+                                                                    keep your account secure.</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -310,9 +309,8 @@
                                                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                                 <div
                                                                     style="font-family: 'Poppins', sans-serif !important;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
-                                                                    Cukup klik tombol dibawah untuk memverifikasi akun
-                                                                    kamu, agar dapat masuk ke website GameINA!
-                                                                </div>
+                                                                    Click the button below to verify your account and
+                                                                    access StreamNest Nepal.</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -324,15 +322,25 @@
                                                                     <tr>
                                                                         <td align="center" bgcolor="#5e6ebf"
                                                                             role="presentation"
-                                                                            style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#8D0916;"
+                                                                            style="border:none;border-radius:3px;cursor:auto;background:#8D0916;"
                                                                             valign="middle"> <a
                                                                                 href="<?php echo $link ?>"
-                                                                                style="display:inline-block;width:250px;background:#8D0916;color:#ffffff;font-family: 'Poppins', sans-serif !important;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;"
+                                                                                style="display:inline-block;width:250px;background:#8D0916;color:#ffffff;font-family: 'Poppins', sans-serif !important;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;border-radius:3px;"
                                                                                 target="_blank">
-                                                                                Klik disini untuk verifikasi.
+                                                                                Verify my account
                                                                             </a> </td>
                                                                     </tr>
                                                                 </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left"
+                                                                style="font-size:0px;padding:10px 25px 20px;word-break:break-word;">
+                                                                <div
+                                                                    style="font-family: 'Poppins', sans-serif !important;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
+                                                                    Once your account is verified, you can explore and
+                                                                    purchase our range of digital subscriptions and
+                                                                    premium services.</div>
                                                             </td>
                                                         </tr>
                                                     </table>

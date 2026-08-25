@@ -23,7 +23,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 //  */
-$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$forwarded_proto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+$cloudflare_proto = $_SERVER['HTTP_CF_VISITOR'] ?? '';
+$is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+	|| $forwarded_proto === 'https'
+	|| strpos($cloudflare_proto, '"scheme":"https"') !== false;
+$config['base_url'] = $is_https ? 'https' : 'http';
 $config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
 $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 /*

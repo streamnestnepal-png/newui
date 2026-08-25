@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Admin Dashboard - GameINA</title>
+    <title>Admin Dashboard - StreamNest</title>
 
     <!-- General CSS Files -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:500,600,700&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@ echo $data['user']['nama_admin'];
 ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Admin - GameINA</div>
+                            <div class="dropdown-title">Admin - StreamNest</div>
 
                             <a href="<?=base_url('welcome/logout')?>" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -209,7 +209,7 @@ $data['user'] = $this->db->get_where('admin', ['email_admin' =>
     $this->session->userdata('email')])->row_array();
 echo $data['user']['nama_admin'];
 ?>!</h1>
-                                <p class="lead">Di Halaman Admin - GameINA | Web Portal Game Indonesia - <br> Pertama di
+                                <p class="lead">Di Halaman Admin - StreamNest | Web Portal Game Indonesia - <br> Pertama di
                                     Indonesia</p>
                                 <div class="mt-4">
                                     <a href="<?=base_url('admin/user_data')?>"
@@ -222,8 +222,7 @@ echo $data['user']['nama_admin'];
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; 2020 <div class="bullet"></div> Program & Design by <a
-                        href="syauqizaidan.github.io">Syaauqi</a> and Nauval Azhar - Stisla Developer
+                    Copyright &copy; 2020 Descienfy / Syaauqi to &copy; 2026 <strong>Stream Nest Nepal</strong>. All rights reserved.
                 </div>
                 <div class="footer-right">
                     Made with <span class="text-danger"> &#10084;</span> by syaauqi

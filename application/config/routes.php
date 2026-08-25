@@ -50,5 +50,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |        my-controller/my-method    -> my_controller/my_method
  */
 $route['default_controller'] = 'welcome';
+$route['subscriptions/netflix'] = 'store/netflix';
+$route['subscriptions/spotify'] = 'store/spotify';
+$route['subscriptions/youtube'] = 'store/youtube';
+$route['subscriptions/chatgpt'] = 'store/chatgpt';
+$route['subscriptions/canva'] = 'store/canva';
+$route['subscriptions/adobe'] = 'store/adobe';
+$route['subscriptions/vpn'] = 'store/vpn';
+$route['subscriptions/discord'] = 'store/discord';
+$route['subscriptions/telegram'] = 'store/telegram';
+$route['subscriptions/all'] = 'store/all_subscriptions';
+$route['subscriptions/checkout'] = 'store/checkout';
+$route['topup/(:any)'] = 'topup/index/$1';
+$route['payment/paybridge-webhook'] = 'payment/paybridge_webhook';
+$route['payment/telegram-webhook'] = 'payment/telegram_webhook';
+$route['payment/create-checkout'] = 'payment/create_checkout';
+$route['payment/complete'] = 'payment/complete';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;

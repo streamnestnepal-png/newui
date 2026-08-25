@@ -7,6 +7,8 @@ class Gamedata extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->database();
+        $this->load->library('email');
     }
 
     public function add_game()
@@ -41,6 +43,7 @@ class Gamedata extends CI_Controller
         }
 
         $this->db->insert('game', $data);
+        $this->notifyUsers('New game added to StreamNest', $data['nama_game']);
 
         $this->session->set_flashdata('success-reg', 'Berhasil!');
         redirect(base_url('admin/game_data'));
@@ -105,6 +108,7 @@ class Gamedata extends CI_Controller
         }
 
         $this->db->insert('playgames', $data);
+        $this->notifyUsers('New free game added to StreamNest', $data['nama_game']);
 
         $this->session->set_flashdata('success-add', 'Berhasil!');
         redirect(base_url('admin/free_games'));
@@ -142,8 +146,38 @@ class Gamedata extends CI_Controller
         }
 
         $this->db->insert('game', $data);
+        $this->notifyUsers('New game added to StreamNest', $data['nama_game']);
 
         $this->session->set_flashdata('success-reg', 'Berhasil!');
         redirect(base_url('publisher/index'));
+    }
+
+    private function notifyUsers($subject, $itemName)
+    {
+        $recipients = $this->db->select('email')->where('is_active', 1)->get('user')->result_array();
+        $recipients = array_column($recipients, 'email');
+        if (!$recipients || !getenv('GAMEINA_SMTP_USER') || !getenv('GAMEINA_SMTP_PASS')) {
+            return;
+        }
+
+        $this->email->initialize([
+            'protocol' => 'smtp',
+            'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
+            'smtp_user' => getenv('GAMEINA_SMTP_USER'),
+            'smtp_pass' => getenv('GAMEINA_SMTP_PASS'),
+            'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
+            'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n",
+        ]);
+        $this->email->from(getenv('GAMEINA_SMTP_USER'), 'StreamNest');
+        $this->email->to(getenv('GAMEINA_SMTP_USER'));
+        $this->email->bcc($recipients);
+        $this->email->subject($subject);
+        $this->email->message('<h2>'.htmlspecialchars($subject, ENT_QUOTES, 'UTF-8').'</h2><p><strong>'.htmlspecialchars($itemName, ENT_QUOTES, 'UTF-8').'</strong> is now available on StreamNest.</p><p>Visit StreamNest to explore it today.</p>');
+        if (!$this->email->send()) {
+            log_message('error', 'New item notification failed: '.$this->email->print_debugger(['headers']));
+        }
     }
 }

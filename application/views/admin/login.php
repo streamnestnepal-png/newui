@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>GameINA | Admin Login</title>
+    <title>StreamNest | Admin Login</title>
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -133,7 +133,7 @@
                         <div class="kt-login__logo">
                             <a href="#">
                                 <h1 class="mx-auto font-weight-bold display-4" style="color: #D6011D !important">
-                                    Gameindonesia.
+                                    StreamNest
                                     </h2>
                             </a>
                         </div>

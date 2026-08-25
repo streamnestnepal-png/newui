@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>GameINA | Store</title>
+    <title>StreamNest | Store</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no ">
 
@@ -175,11 +175,7 @@
                                                                     </span></a></li>
                                                             <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-user"></i><span class="kt-menu__link-text">Free Fire</span></a>
                                                             </li>
-                                                            <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-clipboard"></i><span class="kt-menu__link-text">Arena of valor
-                                                                    </span></a></li>
                                                             <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-graphic-1"></i><span class="kt-menu__link-text">PUBG
-                                                                    </span></a></li>
-                                                            <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-graphic-2"></i><span class="kt-menu__link-text">Marvel : Super war
                                                                     </span></a></li>
                                                         </ul>
                                                     </li>
@@ -216,7 +212,7 @@
                     <!-- begin:: Brand -->
                     <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
                         <a class="kt-header__brand-logo" href="<?= base_url('user') ?>">
-                            <p class="logo-tengah mt-3">Gameindonesia.</p>
+                            <p class="logo-tengah mt-3">StreamNest</p>
                         </a>
                     </div>
 

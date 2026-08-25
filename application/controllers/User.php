@@ -3,12 +3,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+    }
+
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        redirect(base_url('welcome'));
+    }
 
-        $this->load->view('user/index');
+    public function settings()
+    {
+        $email = $this->session->userdata('email');
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        $latest_order = $this->db
+            ->where('email', $email)
+            ->order_by('created_at', 'DESC')
+            ->get('orders')
+            ->row_array();
+
+        $this->load->view('user/settings', [
+            'user' => $user,
+            'email' => $email,
+            'latest_order' => $latest_order,
+        ]);
+    }
+
+    public function orders()
+    {
+        $email = $this->session->userdata('email');
+        $orders = $this->db
+            ->where('email', $email)
+            ->order_by('created_at', 'DESC')
+            ->get('orders')
+            ->result_array();
+
+        $this->load->view('user/orders', ['orders' => $orders]);
     }
 
     public function action()

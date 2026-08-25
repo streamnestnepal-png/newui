@@ -7,10 +7,27 @@ class Welcome extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->library('email');
+        $this->load->library('supabase_sync');
+        try {
+            $this->load->database();
+        } catch (Exception $e) {
+            // Database not available - app will run without database features
+            log_message('error', 'Database connection failed: ' . $e->getMessage());
+        }
     }
 
     public function index()
     {
+        // Check if database is available
+        if (!isset($this->db) || !is_object($this->db)) {
+            // Database not available - show homepage only
+            $this->load->view('templates/nav');
+            $this->load->view('index');
+            $this->load->view('templates/footer');
+            return;
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Harap isi bidang email!',
             'valid_email' => 'Email tidak valid!',
@@ -25,12 +42,117 @@ class Welcome extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             //validasi sukses
-            $this->login();
+            $this->authenticateUser();
         }
+    }
+
+    public function login()
+    {
+        $this->load->view('auth/login');
+    }
+
+    public function google_login()
+    {
+        if (strtoupper($this->input->method()) !== 'POST') {
+            show_404();
+        }
+
+        $credential = trim((string) $this->input->post('credential', true));
+        $flow = $this->input->post('flow', true) === 'signup' ? 'signup' : 'login';
+        $is_ajax = $this->input->get_request_header('X-Requested-With') === 'XMLHttpRequest';
+        $this->config->load('google');
+        $client_id = $this->config->item('google_client_id');
+
+        if (!$credential || !$client_id || !function_exists('curl_init')) {
+            $this->googleLoginFailure('Google login is not configured.', $is_ajax, 400);
+            return;
+        }
+
+        $request = curl_init('https://oauth2.googleapis.com/tokeninfo?id_token='.rawurlencode($credential));
+        curl_setopt_array($request, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 10,
+        ]);
+        $response_body = curl_exec($request);
+        $status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+        curl_close($request);
+        $claims = json_decode((string) $response_body, true);
+
+        if ($status !== 200 || !is_array($claims)
+            || !hash_equals((string) $client_id, (string) ($claims['aud'] ?? ''))
+            || ($claims['email_verified'] ?? '') !== 'true'
+            || !filter_var($claims['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
+            $this->googleLoginFailure('Google account verification failed.', $is_ajax, 401);
+            return;
+        }
+
+        $email = strtolower(trim($claims['email']));
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        if ($flow === 'login' && !$user) {
+            $this->googleLoginFailure('This Google email is not registered. Please sign up first.', $is_ajax, 401);
+            return;
+        }
+        if ($flow === 'signup' && $user) {
+            $this->googleLoginFailure('This Google email is already registered. Please log in instead.', $is_ajax, 409);
+            return;
+        }
+        if (!$user) {
+            $google_user = [
+                'nama' => htmlspecialchars($claims['name'] ?? $email, ENT_QUOTES, 'UTF-8'),
+                'email' => $email,
+                'image' => 'default.jpg',
+                'password' => password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT),
+                'is_active' => 1,
+                'date_created' => time(),
+                'inacash' => 0,
+            ];
+            $this->db->insert('user', $google_user);
+            $google_user['id'] = $this->db->insert_id();
+            $this->syncUserToSupabase($google_user);
+            $this->session->set_flashdata('google-signup-success', 'Your Google account was created successfully. Please log in.');
+            redirect(base_url('welcome/login'));
+            return;
+        } elseif ((int) $user['is_active'] !== 1) {
+            $this->googleLoginFailure('This account is not active yet.', $is_ajax, 403);
+            return;
+        }
+
+        $this->session->set_userdata('email', $email);
+        $login_redirect = $this->session->userdata('login_redirect');
+        $this->session->unset_userdata('login_redirect');
+        $redirect = $login_redirect ?: base_url('welcome');
+        if (!$is_ajax) {
+            redirect($redirect);
+            return;
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode([
+            'success' => true,
+            'redirect' => $redirect,
+        ]));
+    }
+
+    private function googleLoginFailure($message, $is_ajax, $status)
+    {
+        if (!$is_ajax) {
+            $this->session->set_flashdata('google-login-error', $message);
+            redirect(base_url('welcome/login'));
+            return;
+        }
+        $this->output->set_status_header($status)->set_content_type('application/json')->set_output(json_encode([
+            'success' => false,
+            'message' => $message,
+        ]));
     }
 
     public function admin()
     {
+        // Check if database is available
+        if (!isset($this->db) || !is_object($this->db)) {
+            $data['message'] = 'Admin login requires database connection. Please try again later.';
+            $this->load->view('admin/login', $data);
+            return;
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Harap isi bidang email!',
             'valid_email' => 'Email tidak valid!',
@@ -49,6 +171,13 @@ class Welcome extends CI_Controller
 
     public function publisher()
     {
+        // Check if database is available
+        if (!isset($this->db) || !is_object($this->db)) {
+            $data['message'] = 'Publisher login requires database connection. Please try again later.';
+            $this->load->view('publisher/login', $data);
+            return;
+        }
+
         $this->form_validation->set_rules('email2', 'Email', 'trim|required|valid_email', [
             'required' => 'Harap isi bidang email!',
             'valid_email' => 'Email tidak valid!',
@@ -125,9 +254,9 @@ class Welcome extends CI_Controller
         }
     }
 
-    private function login()
+    private function authenticateUser()
     {
-        $email = $this->input->post('email');
+        $email = strtolower(trim($this->input->post('email', true)));
         $password = $this->input->post('password');
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
@@ -142,56 +271,74 @@ class Welcome extends CI_Controller
                     ];
 
                     $this->session->set_userdata($data);
-                    redirect(base_url('user'));
+                    $login_redirect = $this->session->userdata('login_redirect');
+                    $this->session->unset_userdata('login_redirect');
+                    redirect($login_redirect ?: base_url('welcome'));
                 } else {
                     $this->session->set_flashdata('fail-pass', 'Gagal!');
-                    redirect(base_url('welcome'));
+                    redirect(base_url('welcome/login'));
                 }
             } else {
-                $this->session->set_flashdata('fail-email', 'Gagal!');
-                redirect(base_url('welcome'));
+                $this->session->set_flashdata('fail-login', 'Your email is not verified yet.');
+                redirect(base_url('welcome/login'));
             }
         } else {
             $this->session->set_flashdata('fail-login', 'Gagal!');
-            redirect(base_url('welcome'));
+            redirect(base_url('welcome/login'));
         }
     }
 
     public function registration()
     {
-        $this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[5]', [
-            'required' => 'Harap isi kolom username.',
-            'min_length' => 'Username terlalu pendek.',
+        // Check if database is available
+        if (!isset($this->db) || !is_object($this->db)) {
+            $data['message'] = 'Database connection required for registration. Please try again later.';
+            $this->load->view('auth/registration', $data);
+            return;
+        }
+
+        $this->form_validation->set_rules('nama', 'Full name', 'required|trim|min_length[5]', [
+            'required' => 'Please enter your full name.',
+            'min_length' => 'Full name must be at least 5 characters.',
         ]);
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
-            'is_unique' => 'Email ini telah digunakan!',
-            'required' => 'Harap isi kolom email.',
-            'valid_email' => 'Masukan email yang valid.',
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|callback_registration_email_available', [
+            'required' => 'Please enter your email address.',
+            'valid_email' => 'Please enter a valid email address.',
+            'registration_email_available' => 'This email address is already registered.',
         ]);
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|matches[retype_password]', [
-            'required' => 'Harap isi kolom Password.',
-            'matches' => 'Password tidak sama!',
-            'min_length' => 'Password terlalu pendek',
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]', [
+            'required' => 'Please enter a password.',
+            'matches' => 'Passwords do not match.',
+            'min_length' => 'Password must be at least 6 characters.',
         ]);
-        $this->form_validation->set_rules('retype_password', 'Password', 'required|trim|matches[password]');
+        $this->form_validation->set_rules('retype_password', 'Retype password', 'required|trim|matches[password]', [
+            'required' => 'Please retype your password.',
+            'matches' => 'The passwords do not match.',
+        ]);
 
         if ($this->form_validation->run() == false) {
             $this->load->view('auth/registration');
-            $this->load->view('templates/footer');
         } else {
-            $email = $this->input->post('email', true);
+            $email = strtolower(trim($this->input->post('email', true)));
+            $existing_user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+            if ($existing_user) {
+                $this->db->delete('user_token', ['email' => $email]);
+                $this->db->delete('user', ['email' => $email]);
+            }
+
             $data = [
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'email' => htmlspecialchars($email),
                 'image' => 'default.jpg',
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'is_active' => 1,
+                'is_active' => 0,
                 'date_created' => time(),
                 'inacash' => 0,
             ];
 
             //siapkan token
-            $token = base64_encode(random_bytes(32));
+            $token = bin2hex(random_bytes(32));
             $user_token = [
                 'email' => $email,
                 'token' => $token,
@@ -199,22 +346,66 @@ class Welcome extends CI_Controller
             ];
 
             $this->db->insert('user', $data);
+            $data['id'] = $this->db->insert_id();
             $this->db->insert('user_token', $user_token);
+            $this->syncUserToSupabase($data);
 
-
-            $this->session->set_flashdata('success-reg', 'Berhasil!');
+            if ($this->_sendEmail($token, 'verify')) {
+                redirect(base_url('welcome/verification_pending?email=' . rawurlencode($email)));
+            } else {
+                $this->db->delete('user', ['email' => $email]);
+                $this->db->delete('user_token', ['email' => $email]);
+                $this->session->set_flashdata('email-fail', 'We could not send the verification email. Please try again later.');
+            }
             redirect(base_url('welcome'));
         }
+    }
+
+    public function verification_pending()
+    {
+        $email = strtolower(trim($this->input->get('email', true)));
+        $this->load->view('auth/verification_pending', ['email' => $email]);
+    }
+
+    public function verification_status()
+    {
+        $email = strtolower(trim($this->input->get('email', true)));
+        $user = $this->db->select('is_active')->get_where('user', ['email' => $email])->row_array();
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['verified' => $user && (int) $user['is_active'] === 1]));
+    }
+
+    public function registration_email_available($email)
+    {
+        $user = $this->db->get_where('user', ['email' => strtolower(trim($email))])->row_array();
+
+        return !$user || (int) $user['is_active'] !== 1;
+    }
+
+    private function syncUserToSupabase($user)
+    {
+        $this->supabase_sync->upsert('users', [
+            'id' => (int) $user['id'],
+            'name' => $user['nama'],
+            'email' => strtolower($user['email']),
+            'image' => $user['image'] ?? 'default.jpg',
+            'is_active' => (int) $user['is_active'] === 1,
+            'date_created' => (int) $user['date_created'],
+            'inacash' => (int) ($user['inacash'] ?? 0),
+        ], 'id');
     }
 
     private function _sendEmail($token, $type)
     {
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => '',
-            'smtp_pass' => '',
-            'smtp_port' => 465,
+            'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
+            'smtp_user' => getenv('GAMEINA_SMTP_USER'),
+            'smtp_pass' => getenv('GAMEINA_SMTP_PASS'),
+            'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
+            'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls',
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n",
@@ -223,28 +414,31 @@ class Welcome extends CI_Controller
         $this->email->initialize($config);
 
         $data = array(
-            'name' => 'syauqi',
-            'link' => ' ' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '"',
+            'name' => $this->input->post('nama', true),
+            'link' => base_url('welcome/verify') . '?' . http_build_query([
+                'email' => $this->input->post('email', true),
+                'token' => $token,
+            ]),
         );
 
-        $this->email->from('gameinadeveloper@gmail.com', 'GameINA');
+        $this->email->from(getenv('GAMEINA_SMTP_USER'), 'StreamNest');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'verify') {
-            $link =
-                $this->email->subject('Verifikasi Akun');
+            $this->email->subject('Verify your StreamNest account');
             // $this->email->message('Click untuk verifikasi :
             // <a href="' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '">activate</a>');
             $body = $this->load->view('templates/email-template.php', $data, true);
             $this->email->message($body);
         } else {
+            $this->email->subject('Email Verification');
         }
 
         if ($this->email->send()) {
             return true;
         } else {
-            echo $this->email->print_debugger();
-            die();
+            log_message('error', 'Verification email failed: ' . $this->email->print_debugger(['headers']));
+            return false;
         }
     }
 
@@ -252,10 +446,11 @@ class Welcome extends CI_Controller
     {
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'gameinadeveloper@gmail.com',
-            'smtp_pass' => '123syauqy123',
-            'smtp_port' => 465,
+            'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
+            'smtp_user' => getenv('GAMEINA_SMTP_USER'),
+            'smtp_pass' => getenv('GAMEINA_SMTP_PASS'),
+            'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
+            'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls',
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n",
@@ -267,17 +462,17 @@ class Welcome extends CI_Controller
             'link' => ' ' . base_url() . 'welcome/verifypub?email_publisher=' . $this->input->post('email_publisher') . '& token' . urlencode($token) . '"',
         );
 
-        $this->email->from('gameinadeveloper@gmail.com', 'GameINA');
+        $this->email->from(getenv('GAMEINA_SMTP_USER'), 'StreamNest');
         $this->email->to($this->input->post('email_publisher'));
 
         if ($type == 'verifypub') {
-            $link =
-                $this->email->subject('Verifikasi Akun');
+            $this->email->subject('Verifikasi Akun');
             // $this->email->message('Click untuk verifikasi :
             // <a href="' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '">activate</a>');
             $body = $this->load->view('templates/email-template.php', $data, true);
             $this->email->message($body);
         } else {
+            $this->email->subject('Email Verification');
         }
 
         if ($this->email->send()) {
@@ -344,12 +539,15 @@ class Welcome extends CI_Controller
 
     public function verify()
     {
-        $email = $this->input->get('email');
-        $token = $this->input->get('token');
+        $email = strtolower(trim($this->input->get('email', true)));
+        $token = trim(rawurldecode($this->input->get('token', true)));
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
         if ($user) {
-            $user_token = $this->db->get_where('user_token', ['token => $token'])->row_array();
+            $user_token = $this->db->get_where('user_token', [
+                'email' => $email,
+                'token' => $token,
+            ])->row_array();
             if ($user_token) {
                 if (time() - $user_token['date_created'] < (60 * 60 * 24)) {
                     $this->db->set('is_active', 1);
@@ -357,8 +555,8 @@ class Welcome extends CI_Controller
                     $this->db->update('user');
 
                     $this->db->delete('user_token', ['email' => $email]);
-                    $this->session->set_flashdata('success-verify', 'Bserhasil!');
-                    redirect(base_url('welcome'));
+                    $this->session->set_flashdata('success-verify', 'Email verified successfully.');
+                    redirect(base_url('welcome/login'));
                 } else {
                     $this->db->delete('user', ['email' => $email]);
                     $this->db->delete('user_token', ['email' => $email]);

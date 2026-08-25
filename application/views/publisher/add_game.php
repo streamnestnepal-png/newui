@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Admin Dashboard - GameINA</title>
+    <title>Admin Dashboard - StreamNest</title>
 
     <!-- General CSS Files -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:500,600,700&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@
                                                                             ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Admin - GameINA</div>
+                            <div class="dropdown-title">Admin - StreamNest</div>
 
                             <a href="<?= base_url('welcome/logout') ?>" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -86,7 +86,7 @@
             <div class="main-content">
                 <section class="section">
                     <div class="section-header">
-                        <h1>Gameina - Add Store Game Data </h1>
+                        <h1>StreamNest - Add Store Game Data </h1>
                     </div>
                     <div class="col-md-12 bg-white p-4" style="border-radius:3px;box-shadow:rgba(0, 0, 0, 0.03) 0px 4px 8px 0px">
 
@@ -104,10 +104,9 @@
 
                                     <datalist id="idpublisher">
                                         <?php
-                                        include "koneksi.php";
-                                        $qry = mysqli_query($koneksi, "SELECT id_publisher From publisher");
-                                        while ($t = mysqli_fetch_array($qry)) {
-                                            echo "<option value='$t[id_publisher]'>";
+                                        $publishers = $this->db->select('id_publisher')->get('publisher')->result_array();
+                                        foreach ($publishers as $publisher) {
+                                            echo "<option value='" . html_escape($publisher['id_publisher']) . "'>";
                                         }
                                         ?>
                                     </datalist>
@@ -159,7 +158,7 @@
     </div>
     <footer class="main-footer">
         <div class="footer-left">
-            Copyright &copy; 2020 <div class="bullet"></div> Program & Design by <a href="syauqizaidan.github.io">Syaauqi</a> and Nauval Azhar - Stisla Developer
+            Copyright &copy; 2020 Descienfy / Syaauqi to &copy; 2026 <strong>Stream Nest Nepal</strong>. All rights reserved.
         </div>
         <div class="footer-right">
             Made with <span class="text-danger"> &#10084;</span> by syaauqi
