@@ -1,14 +1,10 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libonig-dev \
     && docker-php-ext-install mysqli mbstring \
     && apt-get purge -y --auto-remove libonig-dev \
     && rm -rf /var/lib/apt/lists/*
-RUN for module in /etc/apache2/mods-enabled/mpm_*; do rm -f "$module"; done \
-    && a2enmod mpm_prefork rewrite \
-    && apachectl -M | grep -E 'mpm_(event|worker|prefork|itk)_module' | grep -q '^ mpm_prefork_module'
-
 WORKDIR /var/www/html
 COPY . /var/www/html/
 
@@ -16,8 +12,5 @@ RUN chown -R www-data:www-data /var/www/html/application/cache /var/www/html/app
     && find /var/www/html -type d -exec chmod 755 {} \; \
     && find /var/www/html -type f -exec chmod 644 {} \;
 
-COPY docker/entrypoint.sh /usr/local/bin/gameina-entrypoint
-RUN chmod +x /usr/local/bin/gameina-entrypoint
-
 EXPOSE 8080
-ENTRYPOINT ["gameina-entrypoint"]
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t /var/www/html /var/www/html/router.php"]
