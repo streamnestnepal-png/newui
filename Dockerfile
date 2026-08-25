@@ -5,9 +5,9 @@ RUN apt-get update \
     && docker-php-ext-install mysqli mbstring \
     && apt-get purge -y --auto-remove libonig-dev \
     && rm -rf /var/lib/apt/lists/*
-RUN a2dismod mpm_event mpm_worker mpm_auto mpm_prefork || true \
-    && rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
-    && a2enmod mpm_prefork rewrite
+RUN for module in /etc/apache2/mods-enabled/mpm_*; do rm -f "$module"; done \
+    && a2enmod mpm_prefork rewrite \
+    && apachectl -M | grep -E 'mpm_(event|worker|prefork|itk)_module' | grep -q '^ mpm_prefork_module'
 
 WORKDIR /var/www/html
 COPY . /var/www/html/
