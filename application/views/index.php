@@ -106,40 +106,18 @@
     </div>
 </section>
 
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-6" data-aos-duration="1500" data-aos="fade-right">
-            <img src="<?= base_url('assets/') ?>img/hayabusa.png" class="img-fluid" alt="" srcset="">
-        </div>
-        <div class="col-md-6 my-auto" data-aos-duration="1500" data-aos="fade-left">
-            <h1 class="text-center title mt-5">Interested in joining us?</h1>
-            <p class="text-center text-section">Let us support Indonesian products together! As millennials, we should
-                always support programs and games made by Indonesian creators. Join us to support their work and turn
-                your hobby into progress for the nation, starting today!</p>
-            <a href="<?= base_url('welcome/registration') ?>"><button class="btn btn-section btn-block">Join us today!</button></a>
-        </div>
+<section class="bundle-deals container" aria-label="Cheaper products">
+    <h2>Cheaper products</h2>
+    <div class="bundle-deals-track">
+        <article class="product-card"><img src="<?= base_url('media/netflix.jpg') ?>" alt="Netflix"><h3>Netflix Premium</h3><p>Account &bull; <em>GLOBAL</em></p><strong>NPR 100</strong><del>NPR 150</del><b>-33%</b><a href="<?= base_url('subscriptions/netflix') ?>">View product</a></article>
+        <article class="product-card"><img src="<?= base_url('media/spotify.jpg') ?>" alt="Spotify"><h3>Spotify Premium</h3><p>Subscription &bull; <em>GLOBAL</em></p><strong>NPR 290</strong><del>NPR 350</del><b>-17%</b><a href="<?= base_url('subscriptions/spotify') ?>">View product</a></article>
+        <article class="product-card"><img src="<?= base_url('media/youtube.jpg') ?>" alt="YouTube Premium"><h3>YouTube Premium</h3><p>Subscription &bull; <em>Nepal</em></p><strong>NPR 190</strong><del>NPR 250</del><b>-24%</b><a href="<?= base_url('subscriptions/youtube') ?>">View product</a></article>
+        <article class="product-card"><img src="<?= base_url('media/canva.avif') ?>" alt="Canva Pro"><h3>Canva Pro</h3><p>Subscription &bull; <em>Nepal</em></p><strong>NPR 160</strong><del>NPR 220</del><b>-27%</b><a href="<?= base_url('subscriptions/canva') ?>">View product</a></article>
+        <article class="product-card"><img src="<?= base_url('media/discord.avif') ?>" alt="Discord Nitro"><h3>Discord Nitro</h3><p>Account &bull; <em>GLOBAL</em></p><strong>NPR 602</strong><del>NPR 750</del><b>-20%</b><a href="<?= base_url('subscriptions/discord') ?>">View product</a></article>
+        <article class="product-card"><img src="<?= base_url('media/telegram.avif') ?>" alt="Telegram Premium"><h3>Telegram Premium</h3><p>Subscription &bull; <em>GLOBAL</em></p><strong>NPR 465</strong><del>NPR 550</del><b>-15%</b><a href="<?= base_url('subscriptions/telegram') ?>">View product</a></article>
     </div>
-</div>
+</section>
 
-<div class="container">
-    <div class="end-section row mt-5" data-aos-duration="1200" data-aos="zoom-out">
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-md-10">
-                    <h3 class="font-weight-bold">Punya game? yuk promosikan dan publish sekarang!</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="<?= base_url('welcome/publisher') ?>">
-                        <h5 class="btn btn-light font-weight-bold">Become a Publisher</h5>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">

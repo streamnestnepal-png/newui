@@ -48,8 +48,6 @@
 
                     <!-- Links -->
                     <h5 class="text-uppercase footer-text">Sosial Media</h5>
-
-                    <ul class="list-unstyled">
                         <li>
                             <a href="#!" class="text-white"><i class="fab fa-facebook-square"></i> Facebook</a>
                         </li>
@@ -74,9 +72,10 @@
         <!-- Footer Links -->
 
         <!-- Copyright -->
-        <div class="footer-copyright text-center small py-3">© 2020 Copyright : Descienfy / Syaauqi to © 2026
+        <div class="footer-copyright text-center small py-3">© 2026
             <a href="/" class="text-white"> Stream Nest Nepal</a>. All rights reserved.
         </div>
+
     </div>
     <!-- Copyright -->
 

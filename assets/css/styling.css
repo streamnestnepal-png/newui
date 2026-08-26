@@ -85,6 +85,253 @@ nav.nav-active {
 }
 
 @media (max-width: 767px) {
+	.popular-subscriptions {
+		margin-top: 28px !important;
+		padding: 0 15px;
+	}
+
+	.popular-subscriptions .title {
+		margin-bottom: 20px !important;
+		font-size: 28px;
+		text-align: left !important;
+	}
+
+	.popular-subscriptions .row {
+		margin-right: -8px;
+		margin-left: -8px;
+	}
+
+	.popular-subscriptions .col-md-3 {
+		margin-bottom: 16px !important;
+		padding-right: 8px;
+		padding-left: 8px;
+		width: 100%;
+	}
+
+	.popular-subscriptions .game-tile {
+		background: #fff;
+		border-radius: 14px;
+		box-shadow: 0 5px 16px rgba(33, 16, 82, .12);
+		overflow: hidden;
+	}
+
+	.popular-subscriptions .game-tile:hover {
+		transform: none;
+	}
+
+	.popular-subscriptions .game-tile img {
+		height: 175px;
+		object-fit: cover;
+		background: #f4f5f7;
+		padding: 10px;
+	}
+
+	.popular-subscriptions .col-md-3:nth-child(3) .game-tile img {
+		object-fit: contain;
+		padding: 22px;
+	}
+
+	.popular-subscriptions .game-tile h3,
+	.popular-subscriptions .game-tile p {
+		color: #211052;
+		padding-right: 17px;
+		padding-left: 17px;
+	}
+
+	.popular-subscriptions .game-tile h3 {
+		padding-top: 15px;
+		font-size: 20px;
+	}
+
+	.popular-subscriptions .game-tile p {
+		min-height: 0;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.popular-subscriptions .game-tile a {
+		background: #211052;
+		border-radius: 6px;
+		color: #fff;
+		display: block;
+		margin: 15px 17px 17px;
+		padding: 11px 14px;
+		text-align: center;
+	}
+
+	.popular-subscriptions .game-tile {
+		background: #111;
+		height: 300px;
+		min-height: 300px;
+		position: relative;
+	}
+
+	.popular-subscriptions .game-tile::after {
+		background: linear-gradient(180deg, transparent 25%, rgba(0, 0, 0, .82) 100%);
+		content: '';
+		inset: 0;
+		pointer-events: none;
+		position: absolute;
+	}
+
+	.popular-subscriptions .game-tile img,
+	.popular-subscriptions .game-tile h3,
+	.popular-subscriptions .game-tile p,
+	.popular-subscriptions .game-tile a {
+		position: absolute;
+		z-index: 1;
+	}
+
+	.popular-subscriptions .game-tile img {
+		inset: 0;
+		height: 100% !important;
+		object-fit: cover;
+		padding: 0;
+		width: 100%;
+	}
+
+	.popular-subscriptions .game-tile h3 {
+		bottom: 74px;
+		color: #fff;
+		font-size: 22px;
+		left: 0;
+		margin: 0;
+		padding: 0 20px;
+	}
+
+	.popular-subscriptions .game-tile p {
+		bottom: 46px;
+		color: #f4f4f4;
+		font-size: 13px;
+		left: 0;
+		margin: 0;
+		padding: 0 20px;
+		white-space: nowrap;
+	}
+
+	.popular-subscriptions .game-tile a {
+		background: transparent;
+		bottom: 13px;
+		color: #35e58a;
+		font-size: 15px;
+		left: 0;
+		margin: 0;
+		padding: 0 20px;
+		text-align: left;
+	}
+
+	.popular-subscriptions .col-md-3:nth-child(3) .game-tile {
+		background: #e00018;
+	}
+
+	.popular-subscriptions .col-md-3:nth-child(3) .game-tile img {
+		object-fit: contain;
+		padding: 25px;
+	}
+
+	.bundle-deals {
+		display: block !important;
+		padding: 30px 15px 45px;
+	}
+
+	.bundle-deals h2 {
+		color: #111;
+		font-size: 28px;
+		font-weight: 800;
+		margin: 0 0 18px;
+	}
+
+	.bundle-deals-track {
+		display: flex;
+		gap: 16px;
+		overflow-x: auto;
+		padding-bottom: 8px;
+		scroll-snap-type: x mandatory;
+	}
+
+	.bundle-card {
+		background: #fff;
+		border: 1px solid #d4d4d4;
+		border-radius: 22px;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
+		flex: 0 0 100%;
+		padding: 22px 17px 20px;
+		scroll-snap-align: start;
+	}
+
+	.bundle-item {
+		align-items: center;
+		display: flex;
+		gap: 15px;
+	}
+
+	.bundle-item img {
+		background: #f1f2f4;
+		border-radius: 8px;
+		height: 100px;
+		object-fit: contain;
+		padding: 6px;
+		width: 100px;
+	}
+
+	.bundle-item h3 {
+		color: #111;
+		font-size: 19px;
+		line-height: 1.3;
+		margin: 0 0 5px;
+	}
+
+	.bundle-item p { color: #444; font-size: 13px; margin: 0 0 10px; }
+	.bundle-item em { color: #288728; font-style: normal; }
+	.bundle-item strong { color: #111; font-size: 19px; margin-right: 6px; }
+	.bundle-item del { color: #555; font-size: 13px; margin-right: 6px; }
+	.bundle-item b { background: #f04416; border-radius: 4px; color: #fff; font-size: 12px; padding: 5px; }
+
+	.bundle-plus { color: #777; display: block; font-size: 30px; line-height: 1; margin: 12px 0; text-align: center; }
+	.bundle-sponsored { border-top: 1px solid #ddd; color: #555; font-size: 13px; letter-spacing: .5px; margin: 0 0 14px; padding-top: 14px; }
+	.bundle-sponsored span { border: 1px solid #555; border-radius: 50%; display: inline-block; font-size: 10px; height: 16px; line-height: 15px; text-align: center; width: 16px; }
+	.bundle-total { border-top: 1px solid #ddd; margin-top: 18px; padding-top: 17px; }
+	.bundle-total > strong { color: #111; font-size: 30px; }
+	.bundle-total p { color: #287d24; font-size: 16px; margin: 2px 0 16px; }
+	.bundle-total b { font-size: 21px; }
+	.bundle-button, .bundle-details { border-radius: 10px; display: block; font-size: 17px; font-weight: 700; padding: 14px; text-align: center; }
+	.bundle-button { background: #1469e8; color: #fff; margin-bottom: 12px; }
+	.bundle-details { border: 2px solid #2690ed; color: #1469e8; }
+
+	.bundle-deals-track {
+		display: grid;
+		grid-auto-columns: calc(50% - 8px);
+		grid-auto-flow: column;
+		grid-template-rows: repeat(2, auto);
+	}
+
+	.product-card {
+		background: #fff;
+		border: 1px solid #e2e2e2;
+		border-radius: 14px;
+		box-shadow: 0 3px 10px rgba(0, 0, 0, .07);
+		min-width: 0;
+		overflow: hidden;
+		padding-bottom: 14px;
+	}
+
+	.product-card img {
+		background: #f2f3f5;
+		display: block;
+		height: 125px;
+		object-fit: contain;
+		padding: 8px;
+		width: 100%;
+	}
+
+	.product-card h3 { color: #211052; font-size: 15px; line-height: 1.25; margin: 12px 10px 5px; }
+	.product-card p { color: #555; font-size: 11px; margin: 0 10px 10px; white-space: nowrap; }
+	.product-card em { color: #288728; font-style: normal; }
+	.product-card strong { color: #111; font-size: 15px; margin-left: 10px; }
+	.product-card del { color: #777; font-size: 10px; margin-left: 4px; }
+	.product-card b { background: #f04416; border-radius: 4px; color: #fff; font-size: 10px; margin-left: 4px; padding: 3px; }
+	.product-card a { background: #1469e8; border-radius: 6px; color: #fff; display: block; font-size: 12px; font-weight: 700; margin: 12px 10px 0; padding: 9px 4px; text-align: center; }
+
 	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) .card-game {
 		display: flex !important;
 		flex-direction: row !important;
@@ -211,6 +458,55 @@ nav.nav-active {
 	margin: 12px 16px 16px;
 	color: #20d477;
 	font-weight: 700;
+}
+
+.bundle-deals {
+	display: block;
+}
+
+@media (min-width: 768px) {
+	.bundle-deals {
+		padding: 42px 15px 55px;
+	}
+
+	.bundle-deals h2 {
+		color: #111;
+		font-size: 34px;
+		font-weight: 800;
+		margin: 0 0 24px;
+	}
+
+	.bundle-deals-track {
+		display: grid;
+		gap: 20px;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.product-card {
+		background: #fff;
+		border: 1px solid #e2e2e2;
+		border-radius: 14px;
+		box-shadow: 0 5px 16px rgba(33, 16, 82, .1);
+		overflow: hidden;
+		padding-bottom: 16px;
+	}
+
+	.product-card img {
+		background: #f2f3f5;
+		display: block;
+		height: 190px;
+		object-fit: contain;
+		padding: 12px;
+		width: 100%;
+	}
+
+	.product-card h3 { color: #211052; font-size: 19px; margin: 16px 16px 6px; }
+	.product-card p { color: #555; font-size: 13px; margin: 0 16px 14px; }
+	.product-card em { color: #288728; font-style: normal; }
+	.product-card strong { color: #111; font-size: 20px; margin-left: 16px; }
+	.product-card del { color: #777; font-size: 13px; margin-left: 6px; }
+	.product-card b { background: #f04416; border-radius: 4px; color: #fff; font-size: 12px; margin-left: 6px; padding: 4px; }
+	.product-card a { background: #1469e8; border-radius: 7px; color: #fff; display: block; font-weight: 700; margin: 16px; padding: 12px; text-align: center; }
 }
 
 @keyframes heroReveal {
