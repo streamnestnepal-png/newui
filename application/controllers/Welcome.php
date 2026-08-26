@@ -26,6 +26,7 @@ class Welcome extends CI_Controller
 
         $table = $this->db->query("SHOW TABLES LIKE 'user'");
         if ($table && $table->num_rows() > 0) {
+            $this->db->query("ALTER TABLE `user` MODIFY `id` int(64) NOT NULL AUTO_INCREMENT");
             return;
         }
 

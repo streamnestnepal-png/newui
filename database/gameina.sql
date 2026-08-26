@@ -283,7 +283,7 @@ INSERT INTO `publisher` (`id_publisher`, `nama_publisher`, `nama_perusahaan`, `e
 --
 
 CREATE TABLE `user` (
-  `id` int(64) NOT NULL,
+  `id` int(64) NOT NULL AUTO_INCREMENT,
   `nama` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `image` varchar(64) NOT NULL,
