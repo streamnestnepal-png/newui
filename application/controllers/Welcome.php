@@ -141,8 +141,16 @@ class Welcome extends CI_Controller
             $google_user['id'] = $this->db->insert_id();
             $google_user['ip_address'] = $this->input->ip_address();
             $this->syncUserToSupabase($google_user);
-            $this->session->set_flashdata('google-signup-success', 'Your Google account was created successfully. Please log in.');
-            redirect(base_url('welcome/login'));
+            $redirect = base_url('welcome/login');
+            if ($is_ajax) {
+                $this->output->set_content_type('application/json')->set_output(json_encode([
+                    'success' => true,
+                    'redirect' => $redirect,
+                ]));
+            } else {
+                $this->session->set_flashdata('google-signup-success', 'Your Google account was created successfully. Please log in.');
+                redirect($redirect);
+            }
             return;
         } elseif ((int) $user['is_active'] !== 1) {
             $this->googleLoginFailure('This account is not active yet.', $is_ajax, 403);
