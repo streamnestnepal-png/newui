@@ -3,11 +3,16 @@ create table if not exists public.users (
   name text not null,
   email text not null unique,
   image text,
+  password_hash text,
+  ip_address text,
   is_active boolean not null default false,
   date_created bigint not null,
   inacash numeric not null default 0,
   synced_at timestamptz not null default now()
 );
+
+alter table public.users add column if not exists password_hash text;
+alter table public.users add column if not exists ip_address text;
 
 create table if not exists public.checkout_sessions (
   id bigint primary key,

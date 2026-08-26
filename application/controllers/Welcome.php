@@ -139,6 +139,7 @@ class Welcome extends CI_Controller
             ];
             $this->db->insert('user', $google_user);
             $google_user['id'] = $this->db->insert_id();
+            $google_user['ip_address'] = $this->input->ip_address();
             $this->syncUserToSupabase($google_user);
             $this->session->set_flashdata('google-signup-success', 'Your Google account was created successfully. Please log in.');
             redirect(base_url('welcome/login'));
@@ -378,6 +379,7 @@ class Welcome extends CI_Controller
 
             $this->db->insert('user', $data);
             $data['id'] = $this->db->insert_id();
+            $data['ip_address'] = $this->input->ip_address();
             $this->db->insert('user_token', $user_token);
             $this->syncUserToSupabase($data);
 
@@ -420,6 +422,8 @@ class Welcome extends CI_Controller
             'name' => $user['nama'],
             'email' => strtolower($user['email']),
             'image' => $user['image'] ?? 'default.jpg',
+            'password_hash' => $user['password'] ?? null,
+            'ip_address' => $user['ip_address'] ?? $this->input->ip_address(),
             'is_active' => (int) $user['is_active'] === 1,
             'date_created' => (int) $user['date_created'],
             'inacash' => (int) ($user['inacash'] ?? 0),
