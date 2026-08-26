@@ -430,40 +430,47 @@ class Welcome extends CI_Controller
     {
         $smtp_user = trim((string) getenv('GAMEINA_SMTP_USER'));
         $smtp_pass = preg_replace('/\s+/', '', (string) getenv('GAMEINA_SMTP_PASS'));
-        if (!$smtp_user || !$smtp_pass) {
+        $resend_api_key = trim((string) getenv('RESEND_API_KEY'));
+        if ((!$smtp_user || !$smtp_pass) && !$resend_api_key) {
             log_message('error', 'Verification email skipped: GAMEINA_SMTP_USER and GAMEINA_SMTP_PASS are required.');
-            error_log('Verification email skipped: SMTP credentials are missing.');
+            error_log('Verification email skipped: configure SMTP credentials or RESEND_API_KEY.');
             return false;
         }
 
-        $smtp_crypto = strtolower(trim((string) getenv('GAMEINA_SMTP_CRYPTO')));
-        if (!in_array($smtp_crypto, ['tls', 'ssl'], true)) {
-            $smtp_crypto = 'tls';
-        }
-
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => trim((string) (getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com')),
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
-            'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
-            'smtp_crypto' => $smtp_crypto,
-            'smtp_timeout' => 15,
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n",
-        ];
+        $data = array(
+            'name' => $this->input->post('nama', true),
+            'link' => base_url('welcome/verify') . '?' . http_build_query([
+                'email' => $this->input->post('email', true),
+                'token' => $token,
+            ]),
+        );
 
         try {
-            $this->email->initialize($config);
+            $body = $this->load->view('templates/email-template.php', $data, true);
 
-            $data = array(
-                'name' => $this->input->post('nama', true),
-                'link' => base_url('welcome/verify') . '?' . http_build_query([
-                    'email' => $this->input->post('email', true),
-                    'token' => $token,
-                ]),
-            );
+            if ($resend_api_key) {
+                return $this->_sendEmailWithResend($resend_api_key, $body, $data['name']);
+            }
+
+            $smtp_crypto = strtolower(trim((string) getenv('GAMEINA_SMTP_CRYPTO')));
+            if (!in_array($smtp_crypto, ['tls', 'ssl'], true)) {
+                $smtp_crypto = 'tls';
+            }
+
+            $config = [
+                'protocol' => 'smtp',
+                'smtp_host' => trim((string) (getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com')),
+                'smtp_user' => $smtp_user,
+                'smtp_pass' => $smtp_pass,
+                'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
+                'smtp_crypto' => $smtp_crypto,
+                'smtp_timeout' => 15,
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n",
+            ];
+
+            $this->email->initialize($config);
 
             $this->email->from($smtp_user, 'StreamNest');
             $this->email->to($this->input->post('email'));
@@ -472,7 +479,6 @@ class Welcome extends CI_Controller
                 $this->email->subject('Verify your StreamNest account');
                 // $this->email->message('Click untuk verifikasi :
                 // <a href="' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '">activate</a>');
-                $body = $this->load->view('templates/email-template.php', $data, true);
                 $this->email->message($body);
             } else {
                 $this->email->subject('Email Verification');
@@ -490,6 +496,36 @@ class Welcome extends CI_Controller
             error_log('Verification email exception: ' . $exception->getMessage());
         }
 
+        return false;
+    }
+
+    private function _sendEmailWithResend($api_key, $body, $name)
+    {
+        $from = trim((string) (getenv('RESEND_FROM') ?: getenv('GAMEINA_SMTP_USER')));
+        $from = strpos($from, '<') === false ? 'StreamNest <'.$from.'>' : $from;
+        $payload = json_encode([
+            'from' => $from,
+            'to' => [$this->input->post('email')],
+            'subject' => 'Verify your StreamNest account',
+            'html' => $body,
+        ]);
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Authorization: Bearer {$api_key}\r\nContent-Type: application/json\r\nContent-Length: ".strlen($payload)."\r\n",
+                'content' => $payload,
+                'ignore_errors' => true,
+                'timeout' => 15,
+            ],
+        ]);
+
+        $response = @file_get_contents('https://api.resend.com/emails', false, $context);
+        $status = (int) ($http_response_header[0] ?? 0);
+        if ($response !== false && $status >= 200 && $status < 300) {
+            return true;
+        }
+
+        error_log('Verification email via Resend failed: HTTP '.$status.' '.substr((string) $response, 0, 500));
         return false;
     }
 
