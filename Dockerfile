@@ -1,7 +1,7 @@
 FROM php:8.2-cli
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends default-mysql-client libonig-dev \
+    && apt-get install -y --no-install-recommends default-mysql-client libonig-dev libcurl4-openssl-dev \
     && docker-php-ext-install mysqli mbstring curl \
     && apt-get purge -y --auto-remove libonig-dev \
     && rm -rf /var/lib/apt/lists/*
