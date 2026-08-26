@@ -450,7 +450,10 @@ class Welcome extends CI_Controller
 
             $gmail_refresh_token = trim((string) getenv('GMAIL_REFRESH_TOKEN'));
             if ($gmail_refresh_token) {
-                return $this->_sendEmailWithGmailApi($gmail_refresh_token, $body);
+                if ($this->_sendEmailWithGmailApi($gmail_refresh_token, $body)) {
+                    return true;
+                }
+                error_log('Gmail API delivery failed; trying Resend fallback.');
             }
 
             if ($resend_api_key) {
