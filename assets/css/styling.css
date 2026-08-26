@@ -922,7 +922,7 @@ nav.nav-active {
 	.registration-page-form .form-row .form-group { padding-right: 0; padding-left: 0; }
 	.registration-page-form .registration-agreement { padding-left: 24px; }
 	.login-page-form #google-login-button,
-	.login-page-form #google-signup-button { max-width: 100%; overflow: hidden; }
+	.login-page-form #google-signup-button { max-width: 100%; overflow: visible; }
 	.settings-card { padding: 30px 24px; }
 	.settings-grid { grid-template-columns: 1fr; }
 	.settings-actions { flex-direction: column; }

@@ -91,7 +91,7 @@
             size: 'large',
             text: 'signin_with',
             shape: 'rectangular',
-            width: 360
+            width: Math.min(360, document.querySelector('.login-page-form').clientWidth - 4)
         });
     });
 </script>

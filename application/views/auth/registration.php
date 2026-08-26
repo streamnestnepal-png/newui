@@ -101,7 +101,7 @@
                 size: 'large',
                 text: 'signup_with',
                 shape: 'rectangular',
-                width: 360
+                width: Math.min(360, document.querySelector('.registration-page-form').clientWidth - 4)
             });
         });
     </script>
