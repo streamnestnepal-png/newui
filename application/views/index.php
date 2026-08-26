@@ -7,7 +7,7 @@
             <strong>Your Trusted Digital &amp; Entertainment Store</strong><br>
             Shop premium subscriptions, gift cards, digital products, games, and electronics &mdash; all in one place.
         </p>
-        <a class="btn btn-danger btn-lg hero-action" href="<?= base_url('store') ?>">KEEP SHOPPING &rarr;</a>
+        <a class="btn btn-danger btn-lg hero-action" href="<?= base_url('subscriptions/all') ?>">KEEP SHOPPING &rarr;</a>
     </div>
 </div>
 <!-- end jumbotron -->
