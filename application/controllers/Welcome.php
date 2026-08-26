@@ -11,9 +11,37 @@ class Welcome extends CI_Controller
         $this->load->library('supabase_sync');
         try {
             $this->load->database();
+            $this->ensureDatabaseSchema();
         } catch (Exception $e) {
             // Database not available - app will run without database features
             log_message('error', 'Database connection failed: ' . $e->getMessage());
+        }
+    }
+
+    private function ensureDatabaseSchema()
+    {
+        if (!isset($this->db) || !isset($this->db->conn_id) || !is_object($this->db->conn_id)) {
+            return;
+        }
+
+        $table = $this->db->query("SHOW TABLES LIKE 'user'");
+        if ($table && $table->num_rows() > 0) {
+            return;
+        }
+
+        $schema_path = FCPATH.'database/gameina.sql';
+        if (!is_readable($schema_path)) {
+            log_message('error', 'Database schema file is not readable: '.$schema_path);
+            return;
+        }
+
+        $schema = file_get_contents($schema_path);
+        if (!$schema || !$this->db->conn_id->multi_query($schema)) {
+            log_message('error', 'Database schema initialization failed: '.$this->db->conn_id->error);
+            return;
+        }
+
+        while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result()) {
         }
     }
 
