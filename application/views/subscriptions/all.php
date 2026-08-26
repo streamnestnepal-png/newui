@@ -28,10 +28,21 @@
         .all-page > .d-flex small { display: block; margin-top: 10px; }
         .all-page .row { margin-right: -15px; margin-left: -15px; }
         .all-page .col-md-3 { width: 100%; padding-right: 15px; padding-left: 15px; }
-        .all-page .card-game { width: 100% !important; height: auto; min-height: 350px; margin-right: 0; }
-        .all-art { height: 190px; }
-        .all-image { padding: 12px; }
-        .all-name { min-height: 0; }
+        .all-page .card-game { width: 100% !important; height: auto; min-height: 0; margin-right: 0; border-radius: 25px; overflow: hidden; }
+        .all-page .all-card { margin-top: 18px !important; }
+        .all-art { flex: 0 0 36%; height: auto; min-height: 210px; }
+        .all-image { height: 100%; min-height: 210px; padding: 8px; object-fit: contain; background: #f7f7f7; }
+        .all-badge { display: none; }
+        .all-country { right: 8px; bottom: 8px; font-size: 10px; }
+        .all-page .subscription-product { display: flex; flex-direction: row; }
+        .all-page .subscription-product .card-body { flex: 1; min-width: 0; padding: 18px 17px 15px; position: relative; }
+        .all-name { min-height: 0; margin: 0 28px 8px 0; color: #111; font-size: 20px; line-height: 1.35; }
+        .all-meta { margin: 0 0 18px; color: #4b4b4b; font-size: 14px; line-height: 1.7; }
+        .all-meta strong { color: #444; font-size: 28px; }
+        .all-meta span { color: #222; }
+        .all-meta em { color: #2d8b2d; font-size: 19px; font-style: normal; }
+        .all-price { margin: 0; color: #111; font-size: 26px; font-weight: 500; }
+        .all-page .subscription-buy, .all-page .subscription-add { margin-top: 12px; }
     }
 </style>
 
@@ -44,7 +55,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
         <h2 class="title mb-0">All Plans</h2>
-        <small class="text-muted"><?= count($products) ?> plans available</small>
+        <small class="text-muted">Offers from 14 sellers</small>
     </div>
 
     <div class="all-search">
@@ -68,15 +79,15 @@
     <section class="row" aria-label="All subscription plans">
         <?php foreach ($products as $index => $product) : ?>
             <div class="col-md-3 mt-4 all-card" data-product="<?= html_escape($product[0]) ?>" data-aos="fade-right" data-aos-duration="800" data-aos-delay="<?= ($index % 8) * 40 ?>">
-                <div class="card card-game subscription-product" style="width:16rem;">
+                <div class="card card-game subscription-product">
                     <div class="card-img-top all-art">
                         <span class="all-badge">SUBSCRIPTION</span>
-                        <img class="all-image" src="<?= base_url($product[3]) ?>" alt="<?= html_escape($product[0]) ?>">
+                        <img class="all-image" src="<?= base_url($product[3]) ?>" alt="<?= html_escape($product[0]) ?>" onerror="this.onerror=null; this.src='<?= base_url('media/StreamNest.png') ?>';">
                         <span class="all-country"><?= html_escape($product[1]) ?></span>
                     </div>
                     <div class="card-body">
                         <h3 class="all-name"><?= html_escape($product[0]) ?></h3>
-                        <p class="text-muted small mb-0">Price</p>
+                        <p class="all-meta"><strong><?= strtoupper(substr($product[0], 0, 1)) ?></strong> <?= html_escape(strtok($product[0], ' ')) ?> Account <span>&bull;</span><br>Account <span>&bull;</span> <em><?= html_escape($product[1]) ?></em></p>
                         <p class="all-price">NPR <?= number_format($product[2]) ?></p>
                         <button class="btn btn-primary btn-block btn-games font-weight-bold all-buy subscription-buy" type="button" hidden>Buy Now &rarr;</button>
                         <button class="btn btn-outline-primary btn-block font-weight-bold subscription-add" type="button" hidden data-product="<?= html_escape($product[0]) ?>" data-package="All Subscriptions" data-price="NPR <?= number_format($product[2]) ?>" data-checkout-page="<?= base_url('subscriptions/checkout') ?>">Add to Cart</button>

@@ -55,6 +55,22 @@
  */
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
+	if (function_exists('mysqli_report'))
+	{
+		mysqli_report(MYSQLI_REPORT_OFF);
+	}
+
+	set_error_handler(static function ($severity, $message, $file) {
+		if ($severity === E_WARNING
+			&& strpos($message, 'mysqli::real_connect()') !== false
+			&& basename($file) === 'mysqli_driver.php')
+		{
+			return true;
+		}
+
+		return false;
+	});
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -233,7 +249,7 @@ ob_start(static function ($output) {
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	$system_path = 'system';
+	$system_path = __DIR__.DIRECTORY_SEPARATOR.'system';
 
 /*
  *---------------------------------------------------------------
@@ -250,7 +266,7 @@ ob_start(static function ($output) {
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'application';
+	$application_folder = __DIR__.DIRECTORY_SEPARATOR.'application';
 
 /*
  *---------------------------------------------------------------

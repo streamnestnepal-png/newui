@@ -10,9 +10,11 @@ class Welcome extends CI_Controller
         $this->load->library('email');
         $this->load->library('supabase_sync');
         try {
-            $this->load->database();
-            $this->ensureDatabaseSchema();
-        } catch (Exception $e) {
+            if (getenv('MYSQLHOST') || getenv('DB_HOST')) {
+                $this->load->database();
+                $this->ensureDatabaseSchema();
+            }
+        } catch (Throwable $e) {
             // Database not available - app will run without database features
             log_message('error', 'Database connection failed: ' . $e->getMessage());
         }

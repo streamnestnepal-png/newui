@@ -84,6 +84,58 @@ nav.nav-active {
 	}
 }
 
+@media (max-width: 767px) {
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) .card-game {
+		display: flex !important;
+		flex-direction: row !important;
+		width: 100% !important;
+		height: auto !important;
+		min-height: 0 !important;
+		margin-right: 0 !important;
+		border-radius: 25px;
+		overflow: hidden;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) .card-img-top {
+		flex: 0 0 36% !important;
+		width: 36% !important;
+		height: auto !important;
+		min-height: 210px;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) .card-img-top img {
+		display: block;
+		width: 100% !important;
+		height: 100% !important;
+		min-height: 210px;
+		object-fit: contain;
+		background: #f7f7f7;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) .card-body {
+		flex: 1;
+		min-width: 0;
+		padding: 18px 17px 15px !important;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) [class$="-name"] {
+		min-height: 0 !important;
+		margin: 0 0 8px !important;
+		font-size: 19px !important;
+		line-height: 1.35;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) [class$="-brand"],
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) [class$="-from"] {
+		margin: 0 0 5px !important;
+	}
+
+	:is(.netflix-page, .spotify-page, .youtube-page, .chatgpt-page, .canva-page, .adobe-page, .vpn-page, .discord-page, .telegram-page) [class$="-price"] {
+		margin: 14px 0 0 !important;
+		font-size: 25px !important;
+	}
+}
+
 .index-jumbotron {
 	background-image: url(../img/704073.png);
 	background-size: cover;

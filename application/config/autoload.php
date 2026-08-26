@@ -58,7 +58,12 @@ $autoload['packages'] = array();
 |
 |    $autoload['libraries'] = array('user_agent' => 'ua');
  */
-$autoload['libraries'] = array('database', 'session', 'form_validation', 'email');
+$autoload['libraries'] = array('session', 'form_validation', 'email');
+
+if (getenv('MYSQLHOST') || getenv('DB_HOST'))
+{
+	$autoload['libraries'][] = 'database';
+}
 
 /*
 | -------------------------------------------------------------------
