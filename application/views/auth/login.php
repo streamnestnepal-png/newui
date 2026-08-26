@@ -74,15 +74,22 @@
                     },
                     body: new URLSearchParams({ credential: response.credential, flow: 'login' })
                 })
-                    .then(function (result) { return result.json(); })
+                    .then(function (response) {
+                        return response.text().then(function (text) {
+                            if (!response.ok) {
+                                throw new Error(text || 'Google login failed.');
+                            }
+                            return JSON.parse(text);
+                        });
+                    })
                     .then(function (result) {
                         if (result.success) {
-                            window.location.href = result.redirect;
+                            window.location.replace(result.redirect);
                         } else {
                             window.alert(result.message || 'Google login failed.');
                         }
                     })
-                    .catch(function () { window.alert('Google login failed. Please try again.'); });
+                    .catch(function (error) { window.alert(error.message || 'Google login failed. Please try again.'); });
             }
         });
         google.accounts.id.renderButton(document.getElementById('google-login-button'), {
