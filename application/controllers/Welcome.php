@@ -428,54 +428,69 @@ class Welcome extends CI_Controller
 
     private function _sendEmail($token, $type)
     {
-        $smtp_user = getenv('GAMEINA_SMTP_USER');
-        $smtp_pass = getenv('GAMEINA_SMTP_PASS');
+        $smtp_user = trim((string) getenv('GAMEINA_SMTP_USER'));
+        $smtp_pass = preg_replace('/\s+/', '', (string) getenv('GAMEINA_SMTP_PASS'));
         if (!$smtp_user || !$smtp_pass) {
             log_message('error', 'Verification email skipped: GAMEINA_SMTP_USER and GAMEINA_SMTP_PASS are required.');
+            error_log('Verification email skipped: SMTP credentials are missing.');
             return false;
+        }
+
+        $smtp_crypto = strtolower(trim((string) getenv('GAMEINA_SMTP_CRYPTO')));
+        if (!in_array($smtp_crypto, ['tls', 'ssl'], true)) {
+            $smtp_crypto = 'tls';
         }
 
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
+            'smtp_host' => trim((string) (getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com')),
             'smtp_user' => $smtp_user,
             'smtp_pass' => $smtp_pass,
             'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
-            'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls',
+            'smtp_crypto' => $smtp_crypto,
+            'smtp_timeout' => 15,
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n",
         ];
 
-        $this->email->initialize($config);
+        try {
+            $this->email->initialize($config);
 
-        $data = array(
-            'name' => $this->input->post('nama', true),
-            'link' => base_url('welcome/verify') . '?' . http_build_query([
-                'email' => $this->input->post('email', true),
-                'token' => $token,
-            ]),
-        );
+            $data = array(
+                'name' => $this->input->post('nama', true),
+                'link' => base_url('welcome/verify') . '?' . http_build_query([
+                    'email' => $this->input->post('email', true),
+                    'token' => $token,
+                ]),
+            );
 
-        $this->email->from($smtp_user, 'StreamNest');
-        $this->email->to($this->input->post('email'));
+            $this->email->from($smtp_user, 'StreamNest');
+            $this->email->to($this->input->post('email'));
 
-        if ($type == 'verify') {
-            $this->email->subject('Verify your StreamNest account');
-            // $this->email->message('Click untuk verifikasi :
-            // <a href="' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '">activate</a>');
-            $body = $this->load->view('templates/email-template.php', $data, true);
-            $this->email->message($body);
-        } else {
-            $this->email->subject('Email Verification');
+            if ($type == 'verify') {
+                $this->email->subject('Verify your StreamNest account');
+                // $this->email->message('Click untuk verifikasi :
+                // <a href="' . base_url() . 'welcome/verify?email=' . $this->input->post('email') . '& token' . urlencode($token) . '">activate</a>');
+                $body = $this->load->view('templates/email-template.php', $data, true);
+                $this->email->message($body);
+            } else {
+                $this->email->subject('Email Verification');
+            }
+
+            if ($this->email->send()) {
+                return true;
+            }
+
+            $debug = $this->email->print_debugger(['headers']);
+            log_message('error', 'Verification email failed: ' . $debug);
+            error_log('Verification email failed: ' . strip_tags($debug));
+        } catch (Throwable $exception) {
+            log_message('error', 'Verification email exception: ' . $exception->getMessage());
+            error_log('Verification email exception: ' . $exception->getMessage());
         }
 
-        if ($this->email->send()) {
-            return true;
-        } else {
-            log_message('error', 'Verification email failed: ' . $this->email->print_debugger(['headers']));
-            return false;
-        }
+        return false;
     }
 
     private function _sendEmailPublisher($token, $type)
