@@ -896,13 +896,33 @@ nav.nav-active {
 .settings-actions { display: flex; gap: 12px; margin-top: 30px; }
 
 @media (max-width: 700px) {
-	.login-page-card { grid-template-columns: 1fr; }
+	.login-page,
+	.settings-page {
+		align-items: flex-start;
+		padding: 14px;
+	}
+
+	.login-page-card {
+		grid-template-columns: minmax(0, 1fr);
+		width: 100%;
+		min-height: 0;
+		border-radius: 14px;
+	}
+
 	.login-page-form { order: -1; }
-	.login-page-visual { min-height: 250px; padding: 24px; }
-	.login-page-visual img { height: 150px; }
+	.login-page-visual { min-height: 190px; padding: 22px 20px; text-align: center; }
+	.login-page-visual img { height: 110px; }
 	.login-page-visual h1 { font-size: 1.5rem; }
-	.login-page-form { padding: 28px 24px 34px; }
+	.login-page-form { min-width: 0; padding: 28px 20px 34px; }
 	.login-back-link { margin-bottom: 28px; }
+	.login-page-form h2 { font-size: 1.65rem; line-height: 1.25; }
+	.login-page-form .form-control { max-width: 100%; }
+	.login-page-form .alert { overflow-wrap: anywhere; }
+	.registration-page-form .form-row { margin-right: 0; margin-left: 0; }
+	.registration-page-form .form-row .form-group { padding-right: 0; padding-left: 0; }
+	.registration-page-form .registration-agreement { padding-left: 24px; }
+	.login-page-form #google-login-button,
+	.login-page-form #google-signup-button { max-width: 100%; overflow: hidden; }
 	.settings-card { padding: 30px 24px; }
 	.settings-grid { grid-template-columns: 1fr; }
 	.settings-actions { flex-direction: column; }
