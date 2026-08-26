@@ -3,8 +3,8 @@
     .all-hero { padding: 42px 28px; margin-bottom: 38px; background: linear-gradient(120deg, #172554, #0f766e); color: #fff; }
     .all-hero h1 { margin: 0 0 10px; color: #fff; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
     .all-hero p { max-width: 640px; margin: 0; color: #dbeafe; }
-    .all-art { position: relative; display: grid; width: 100%; height: 180px; place-items: center; overflow: hidden; background: #f3f4f6; }
-    .all-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .all-art { position: relative; display: grid; width: 100%; height: 210px; place-items: center; overflow: hidden; background: #f8fafc; }
+    .all-image { display: block; width: 100%; height: 100%; padding: 16px; object-fit: contain; }
     .all-badge, .all-country { position: absolute; z-index: 2; padding: 4px 8px; font-size: 11px; font-weight: 700; }
     .all-badge { top: 10px; left: 10px; background: #0f766e; color: #fff; }
     .all-country { right: 10px; bottom: 10px; background: #fff; color: #111827; }
@@ -29,6 +29,8 @@
         .all-page .row { margin-right: -15px; margin-left: -15px; }
         .all-page .col-md-3 { width: 100%; padding-right: 15px; padding-left: 15px; }
         .all-page .card-game { width: 100% !important; height: auto; min-height: 350px; margin-right: 0; }
+        .all-art { height: 190px; }
+        .all-image { padding: 12px; }
         .all-name { min-height: 0; }
     }
 </style>
