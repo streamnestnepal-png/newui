@@ -28,9 +28,14 @@ $cloudflare_proto = $_SERVER['HTTP_CF_VISITOR'] ?? '';
 $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 	|| $forwarded_proto === 'https'
 	|| strpos($cloudflare_proto, '"scheme":"https"') !== false;
-$config['base_url'] = $is_https ? 'https' : 'http';
-$config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
-$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+$configured_base_url = rtrim((string) getenv('GAMEINA_BASE_URL'), '/');
+if ($configured_base_url) {
+	$config['base_url'] = $configured_base_url.'/';
+} else {
+	$config['base_url'] = $is_https ? 'https' : 'http';
+	$config['base_url'] .= "://" . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+	$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME'] ?? ''), "", $_SERVER['SCRIPT_NAME'] ?? '');
+}
 /*
 |--------------------------------------------------------------------------
 | Index File

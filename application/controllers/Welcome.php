@@ -384,11 +384,9 @@ class Welcome extends CI_Controller
             if ($this->_sendEmail($token, 'verify')) {
                 redirect(base_url('welcome/verification_pending?email=' . rawurlencode($email)));
             } else {
-                $this->db->delete('user', ['email' => $email]);
-                $this->db->delete('user_token', ['email' => $email]);
-                $this->session->set_flashdata('email-fail', 'We could not send the verification email. Please try again later.');
+                $this->session->set_flashdata('email-fail', 'Account created, but the verification email could not be sent. Please contact support or try again later.');
             }
-            redirect(base_url('welcome'));
+            redirect(base_url('welcome/registration'));
         }
     }
 
@@ -430,11 +428,18 @@ class Welcome extends CI_Controller
 
     private function _sendEmail($token, $type)
     {
+        $smtp_user = getenv('GAMEINA_SMTP_USER');
+        $smtp_pass = getenv('GAMEINA_SMTP_PASS');
+        if (!$smtp_user || !$smtp_pass) {
+            log_message('error', 'Verification email skipped: GAMEINA_SMTP_USER and GAMEINA_SMTP_PASS are required.');
+            return false;
+        }
+
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
-            'smtp_user' => getenv('GAMEINA_SMTP_USER'),
-            'smtp_pass' => getenv('GAMEINA_SMTP_PASS'),
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
             'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls',
             'mailtype' => 'html',
@@ -452,7 +457,7 @@ class Welcome extends CI_Controller
             ]),
         );
 
-        $this->email->from(getenv('GAMEINA_SMTP_USER'), 'StreamNest');
+        $this->email->from($smtp_user, 'StreamNest');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'verify') {

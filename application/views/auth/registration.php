@@ -23,6 +23,9 @@
             <?php if ($this->session->flashdata('purchase_notice')) : ?>
                 <div class="alert alert-info" role="alert"><?= html_escape($this->session->flashdata('purchase_notice')) ?></div>
             <?php endif; ?>
+            <?php if ($this->session->flashdata('email-fail')) : ?>
+                <div class="alert alert-warning" role="alert"><?= html_escape($this->session->flashdata('email-fail')) ?></div>
+            <?php endif; ?>
             <p class="login-intro">Create your account and unlock the full experience.</p>
             <form action="<?=base_url('welcome/registration');?>" method="post">
                 <div class="form-group">

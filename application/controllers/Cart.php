@@ -48,6 +48,13 @@ class Cart extends CI_Controller
             show_404();
         }
 
+        $smtp_user = getenv('GAMEINA_SMTP_USER');
+        $smtp_pass = getenv('GAMEINA_SMTP_PASS');
+        if (!$smtp_user || !$smtp_pass) {
+            log_message('error', 'Cart reminder skipped: GAMEINA_SMTP_USER and GAMEINA_SMTP_PASS are required.');
+            return;
+        }
+
         $today = date('Y-m-d');
         $rows = $this->db->where('updated_at <', time() - 3600)->get('abandoned_carts')->result_array();
         foreach ($rows as $cart) {
@@ -62,12 +69,12 @@ class Cart extends CI_Controller
             }, is_array($items) ? $items : []));
             $this->email->initialize([
                 'protocol' => 'smtp', 'smtp_host' => getenv('GAMEINA_SMTP_HOST') ?: 'smtp.gmail.com',
-                'smtp_user' => getenv('GAMEINA_SMTP_USER'), 'smtp_pass' => getenv('GAMEINA_SMTP_PASS'),
+                'smtp_user' => $smtp_user, 'smtp_pass' => $smtp_pass,
                 'smtp_port' => (int) (getenv('GAMEINA_SMTP_PORT') ?: 587),
                 'smtp_crypto' => getenv('GAMEINA_SMTP_CRYPTO') ?: 'tls', 'mailtype' => 'html',
                 'charset' => 'utf-8', 'newline' => "\r\n",
             ]);
-            $this->email->from(getenv('GAMEINA_SMTP_USER'), 'StreamNest');
+            $this->email->from($smtp_user, 'StreamNest');
             $this->email->to($cart['email']);
             $this->email->subject('Your StreamNest cart is waiting');
             $this->email->message('<h2>Your cart is waiting for you</h2><p>You left these items in your StreamNest cart:</p><p>'.$item_text.'</p><p><a href="'.base_url('cart').'">Return to your cart</a> and complete your order.</p>');
