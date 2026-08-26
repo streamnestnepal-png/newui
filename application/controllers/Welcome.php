@@ -448,6 +448,11 @@ class Welcome extends CI_Controller
         try {
             $body = $this->load->view('templates/email-template.php', $data, true);
 
+            $gmail_refresh_token = trim((string) getenv('GMAIL_REFRESH_TOKEN'));
+            if ($gmail_refresh_token) {
+                return $this->_sendEmailWithGmailApi($gmail_refresh_token, $body);
+            }
+
             if ($resend_api_key) {
                 return $this->_sendEmailWithResend($resend_api_key, $body, $data['name']);
             }
@@ -497,6 +502,85 @@ class Welcome extends CI_Controller
         }
 
         return false;
+    }
+
+    private function _sendEmailWithGmailApi($refresh_token, $body)
+    {
+        $client_id = trim((string) getenv('GMAIL_CLIENT_ID'));
+        $client_secret = trim((string) getenv('GMAIL_CLIENT_SECRET'));
+        $from = trim((string) (getenv('GMAIL_FROM') ?: getenv('GAMEINA_SMTP_USER')));
+        $recipient = trim((string) $this->input->post('email'));
+
+        if (!$client_id || !$client_secret || !$from || !$recipient) {
+            error_log('Verification email via Gmail API skipped: OAuth variables are incomplete.');
+            return false;
+        }
+
+        $token = $this->_postJsonForm('https://oauth2.googleapis.com/token', [
+            'client_id' => $client_id,
+            'client_secret' => $client_secret,
+            'refresh_token' => $refresh_token,
+            'grant_type' => 'refresh_token',
+        ]);
+        if (empty($token['access_token'])) {
+            error_log('Verification email via Gmail API token exchange failed: '.substr(json_encode($token), 0, 500));
+            return false;
+        }
+
+        $mime = "From: StreamNest <{$from}>\r\n"
+            ."To: {$recipient}\r\n"
+            .'Subject: Verify your StreamNest account' ."\r\n"
+            .'MIME-Version: 1.0' ."\r\n"
+            .'Content-Type: text/html; charset=UTF-8' ."\r\n\r\n"
+            .$body;
+        $raw = rtrim(strtr(base64_encode($mime), '+/', '-_'), '=');
+
+        $response = $this->_postJson('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', [
+            'raw' => $raw,
+        ], [
+            'Authorization: Bearer '.$token['access_token'],
+        ]);
+        if (!empty($response['id'])) {
+            return true;
+        }
+
+        error_log('Verification email via Gmail API failed: '.substr(json_encode($response), 0, 500));
+        return false;
+    }
+
+    private function _postJsonForm($url, $fields)
+    {
+        $curl = curl_init($url);
+        curl_setopt_array($curl, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query($fields),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
+            CURLOPT_TIMEOUT => 15,
+        ]);
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $decoded = json_decode((string) $response, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function _postJson($url, $payload, $headers = [])
+    {
+        $curl = curl_init($url);
+        $headers[] = 'Content-Type: application/json';
+        curl_setopt_array($curl, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_TIMEOUT => 15,
+        ]);
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $decoded = json_decode((string) $response, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
     private function _sendEmailWithResend($api_key, $body, $name)
