@@ -63,7 +63,7 @@ echo $data['user']['nama_admin'];
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand text-danger">
                         <a href="<?=base_url('admin')?>" style="font-size: 24px; font-weight:700"
-                            class="text-danger">Gameindonesia</a>
+                            class="text-danger">StreamNest Nepal</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="<?=base_url('admin')?>">GM</a>

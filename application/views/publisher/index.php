@@ -54,7 +54,7 @@
             <div class="main-sidebar">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand text-danger">
-                        <a href="<?= base_url('admin') ?>" style="font-size: 24px; font-weight:700" class="text-danger">Gameindonesia</a>
+                        <a href="<?= base_url('admin') ?>" style="font-size: 24px; font-weight:700" class="text-danger">StreamNest Nepal</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="<?= base_url('admin') ?>">GM</a>
@@ -98,8 +98,7 @@
                                                     $this->session->userdata('email')])->row_array();
                                                     echo $data['user']['nama_publisher'];
                                                     ?>!</h1>
-                                <p class="lead">Di Halaman Publisher - StreamNest | Web Portal Game Indonesia - <br> Pertama di
-                                    Indonesia</p>
+                                <p class="lead">StreamNest Nepal publisher dashboard.</p>
                                 <div class="mt-4">
                                     <a href="<?= base_url('publisher/add_game') ?>" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i> Publish Game</a>
                                 </div>

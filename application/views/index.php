@@ -2,10 +2,10 @@
 
 <div class="jumbotron jumbotron-fluid index-jumbotron rellax" data-rellax-speed="-2">
     <div class="container">
-        <h1 class="display-2 mt-5 header-jumbotron">Welcome to Stream Nest</h1>
+        <h1 class="display-2 mt-5 header-jumbotron">StreamNest Nepal</h1>
         <p class="lead text-jumbotron">
-            <strong>Your Trusted Digital &amp; Entertainment Store</strong><br>
-            Shop premium subscriptions, gift cards, digital products, games, and electronics &mdash; all in one place.
+            <strong>Your Trusted Digital &amp; Entertainment Store in Nepal</strong><br>
+            Shop premium subscriptions, game top-ups, gift cards, digital products, and electronics from StreamNest Nepal.
         </p>
         <a class="btn btn-danger btn-lg hero-action" href="<?= base_url('subscriptions/all') ?>">KEEP SHOPPING &rarr;</a>
     </div>
@@ -22,17 +22,17 @@
                 <div class="col-md">
                     <img src="<?= base_url('assets/'); ?>img/slot-machine.png" alt="" srcset="" class="float-left">
                     <h4>Fun!</h4>
-                    <p>Enjoy premium subscriptions at great prices!</p>
+                    <p>Enjoy premium subscriptions at great prices in Nepal.</p>
                 </div>
                 <div class="col-md">
                     <img src="<?= base_url('assets/'); ?>img/gamepad.png" alt="" srcset="" class="float-left">
                     <h4>Relax!</h4>
-                    <p>Easy, secure, and hassle-free shopping!</p>
+                    <p>Easy, secure, and hassle-free digital shopping.</p>
                 </div>
                 <div class="col-md">
                     <img src="<?= base_url('assets/'); ?>img/nintendo-switch.png" alt="" srcset="" class="float-left">
                     <h4>Premium!</h4>
-                    <p>Get your favorite premium subscriptions &mdash; all in one place!</p>
+                    <p>Get your favorite digital services in one place.</p>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
 <!-- title -->
 <div class="row topup">
     <div class="col-md-10 container mt-5">
-        <h2 class="title text-center" data-aos="zoom-out" data-aos-duration="1200">Game Top-Up Vouchers Made Easy!</h2>
+        <h2 class="title text-center" data-aos="zoom-out" data-aos-duration="1200">Game Top-Up in Nepal Made Easy</h2>
     </div>
     <br>
     <!-- title -->

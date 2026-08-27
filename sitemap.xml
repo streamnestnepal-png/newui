@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url><loc>https://gameina-production.up.railway.app/welcome</loc><priority>1.0</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/all</loc><priority>0.9</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/netflix</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/spotify</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/youtube</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/canva</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/discord</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/telegram</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/subscriptions/vpn</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/topup/mobile_legends</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/topup/free_fire</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/topup/pubg</loc><priority>0.8</priority></url>
+    <url><loc>https://gameina-production.up.railway.app/games</loc><priority>0.7</priority></url>
+</urlset>

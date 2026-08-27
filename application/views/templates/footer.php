@@ -12,9 +12,8 @@
                 <div class="col-md-6 mt-md-0 mt-3">
 
                     <!-- Content -->
-                    <h3 class="text-uppercase footer-text">About StreamNest</h3>
-                    <p>Your trusted destination for premium subscriptions and digital services. Get access to your
-                        favorite platforms quickly, securely, and hassle-free.</p>
+                    <h3 class="text-uppercase footer-text">About StreamNest Nepal</h3>
+                    <p>StreamNest Nepal is your trusted destination for premium subscriptions, game top-ups and digital services.</p>
 
                 </div>
                 <!-- Grid column -->
@@ -73,7 +72,7 @@
 
         <!-- Copyright -->
         <div class="footer-copyright text-center small py-3">© 2026
-            <a href="/" class="text-white"> Stream Nest Nepal</a>. All rights reserved.
+            <a href="/" class="text-white"> StreamNest Nepal</a>. All rights reserved.
         </div>
 
     </div>

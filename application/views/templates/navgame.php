@@ -19,7 +19,42 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.7.1/dist/sweetalert2.all.min.js"></script>
 
 
-    <title>StreamNest - Web Game Portal Indonesia</title>
+    <title>StreamNest Nepal | Digital Subscriptions, Top-Up &amp; Gaming Store</title>
+    <meta name="description" content="StreamNest Nepal by Mitesh Mandal is a trusted online store for premium subscriptions, game top-ups, digital products, gift cards and electronics in Nepal.">
+    <meta name="keywords" content="StreamNest Nepal, digital subscriptions Nepal, Netflix, Spotify, YouTube Premium, Canva Pro, game top up Nepal, PUBG UC, Free Fire diamonds, Mobile Legends diamonds">
+    <meta name="author" content="Mitesh Mandal">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="<?= current_url(); ?>">
+    <meta property="og:title" content="StreamNest Nepal | Digital Subscriptions &amp; Game Top-Up">
+    <meta property="og:description" content="Shop premium subscriptions, game top-ups and digital products from StreamNest Nepal.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= current_url(); ?>">
+    <meta property="og:site_name" content="StreamNest Nepal">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="StreamNest Nepal | Digital Store">
+    <meta name="twitter:description" content="Premium subscriptions, game top-ups and digital products for customers in Nepal.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["OnlineStore", "Organization"],
+        "name": "StreamNest Nepal",
+        "url": "<?= base_url(); ?>",
+        "description": "Premium subscriptions, game top-ups, digital products, gift cards and electronics in Nepal.",
+        "areaServed": "NP",
+        "founder": {
+            "@type": "Person",
+            "name": "Mitesh Mandal"
+        },
+        "owner": {
+            "@type": "Person",
+            "name": "Mitesh Mandal"
+        },
+        "brand": {
+            "@type": "Brand",
+            "name": "StreamNest Nepal"
+        }
+    }
+    </script>
 </head>
 
 <body>

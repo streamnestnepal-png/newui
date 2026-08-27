@@ -124,11 +124,8 @@
             </div>
             <div class="col-md-6 my-auto" data-aos="fade-left" data-aos-duration="1300">
                 <h1 class="text-center title mt-5">Tertarik bergabung bersama kami?</h1>
-                <p class="text-center text-section">Mari bersama mendukung produk indonesia! sebagai millenial kita
-                    harus
-                    senantiasa mendukung program ataupun games yang dibuat oleh anak bangsa!. mari bergabung dengan kami
-                    untuk mendukung karya karya yang dibuat oleh millenial indonesia! jadikan hobby sebagai titik maju
-                    bangsa mulai dari sekarang!</p>
+                <p class="text-center text-section">Temukan game seru dan hiburan digital pilihan di StreamNest Nepal.
+                    Join StreamNest Nepal for an easy, secure, and fun gaming experience!</p>
                 <a href="<?=base_url('welcome/registration')?>"><button class="btn btn-section btn-block">Daftar
                         Sekarang!</button></a>
             </div>

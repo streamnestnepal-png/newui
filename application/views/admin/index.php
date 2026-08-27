@@ -60,7 +60,7 @@ echo $data['user']['nama_admin'];
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand text-danger">
                         <a href="<?=base_url('admin')?>" style="font-size: 24px; font-weight:700"
-                            class="text-danger">Gameindonesia</a>
+                            class="text-danger">StreamNest Nepal</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="<?=base_url('admin')?>">GM</a>
@@ -209,8 +209,7 @@ $data['user'] = $this->db->get_where('admin', ['email_admin' =>
     $this->session->userdata('email')])->row_array();
 echo $data['user']['nama_admin'];
 ?>!</h1>
-                                <p class="lead">Di Halaman Admin - StreamNest | Web Portal Game Indonesia - <br> Pertama di
-                                    Indonesia</p>
+                                <p class="lead">StreamNest Nepal admin dashboard.</p>
                                 <div class="mt-4">
                                     <a href="<?=base_url('admin/user_data')?>"
                                         class="btn btn-outline-white btn-lg btn-icon icon-left"><i

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /publisher
+Disallow: /welcome/login
+Disallow: /welcome/registration
+Disallow: /cart
+Disallow: /payment
+Disallow: /user
+
+Sitemap: https://gameina-production.up.railway.app/sitemap.xml

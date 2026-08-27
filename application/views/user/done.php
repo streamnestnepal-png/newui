@@ -22,7 +22,7 @@
 
 
 
-    <title>StreamNest - Web Game Portal Indonesia</title>
+    <title>Order Complete | StreamNest Nepal</title>
 </head>
 
 <body>
